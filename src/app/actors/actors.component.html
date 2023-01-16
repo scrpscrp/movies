@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <div class="cards-container">
+    <div *ngFor="let actor of actors">
+      <app-cards
+        [title]="actor.name"
+        [date]="actor.known_for_department"
+        [poster_path]="actor.profile_path"
+      ></app-cards>
+    </div>
+    <button (click)="loadMore()">Load more</button>
+  </div>
+</div>

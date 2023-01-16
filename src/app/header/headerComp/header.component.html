@@ -1,0 +1,14 @@
+<div>
+  <p-menubar styleClass="flex" [model]="items">
+    <ng-template pTemplate="start" class="logo">
+      <div class="logo"><a routerLink=""> JIMBO CINEMA</a></div>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="menu-reg">
+        <app-sign-in-comp></app-sign-in-comp>
+        <app-log-in-comp></app-log-in-comp>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
+<router-outlet></router-outlet>
