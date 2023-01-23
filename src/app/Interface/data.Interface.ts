@@ -5,5 +5,4 @@ export interface DataInterface {
   results: Movie[];
   totalPages: number;
   totalResults: number;
-  
 }

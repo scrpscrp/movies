@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs';
 import { formsInterface } from '../Interface/form.interface';
+import { filterInterface } from '../Interface/filter.interface';
 
 @Component({
   selector: 'app-tv-show',
@@ -20,57 +21,14 @@ export class TvShowComponent implements OnInit {
   title: string = '';
   pageCount: number = 1;
   filterTvShow: TvShow[] = [];
-  form: FormGroup;
-  Data: formsInterface[] = [
-    // { name:''}
-
-    { id: 28, name: 'Action' },
-
-    { id: 12, name: 'Adventure' },
-
-    { id: 16, name: 'Animation' },
-
-    { id: 35, name: 'Comedy' },
-
-    { id: 80, name: 'Crime' },
-
-    { id: 99, name: 'Documentary' },
-
-    { id: 18, name: 'Drama' },
-
-    { id: 10751, name: 'Family' },
-
-    { id: 14, name: 'Fantasy' },
-
-    { id: 36, name: 'History' },
-
-    { id: 27, name: 'Horror' },
-
-    { id: 10402, name: 'Music' },
-
-    { id: 9648, name: 'Mystery' },
-
-    { id: 10749, name: 'Romance' },
-
-    { id: 878, name: 'Science Fiction' },
-
-    { id: 10770, name: 'TV Movie' },
-
-    { id: 53, name: 'Thriller' },
-
-    { id: 10752, name: 'War' },
-
-    { id: 37, name: 'Western' },
-  ];
+  genresToFilter: string = '';
+  rating: string = '';
+  
 
   constructor(
     private TvShowService: TvShowService,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
-  ) {this.form = this.fb.group({
-    checkArray: this.fb.array([], [Validators.required]),
-  });}
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.checkRoute();
@@ -85,19 +43,19 @@ export class TvShowComponent implements OnInit {
         switch (this.params) {
           case 'popular':
             this.title = 'Popular';
-            this.resetFilter();
+            this.resetFilter(event);
             break;
           case 'airing_today':
             this.title = 'Airing today';
-            this.resetFilter();
+            this.resetFilter(event);
             break;
           case 'on_the_air':
             this.title = 'On Tv';
-            this.resetFilter();
+            this.resetFilter(event);
             break;
           case 'top_rated':
             this.title = 'Top Rated';
-            this.resetFilter();
+            this.resetFilter(event);
             break;
         }
         this.TvShowService.getTvShow(this.params)
@@ -109,41 +67,40 @@ export class TvShowComponent implements OnInit {
       }
     });
   }
+
   loadMore() {
     this.pageCount++;
-    this.TvShowService.getTvShow(this.params, this.pageCount).subscribe(
-      (data: tvShowDataInterface) => {
-        this.tvShow.push(...data.results);
-      }
-    );
     if (this.filterTvShow.length) {
-      this.filter();
+      this.TvShowService.getFilteredTV(this.genresToFilter, this.pageCount)
+        .pipe(take(1))
+        .subscribe((data: tvShowDataInterface) => {
+          this.filterTvShow.push(...data.results);
+        });
+    } else {
+      this.TvShowService.getTvShow(this.params, this.pageCount)
+        .pipe(take(1))
+        .subscribe((data: tvShowDataInterface) => {
+          this.tvShow.push(...data.results);
+        });
     }
   }
+
   // filterGenres() {
   //   this.filterTvShow = this.tvShow.filter((tvshow: TvShow) =>
   //     tvshow.genre_ids.includes(35)
   //   );
   // }
-
-  filter() {
-    let genresToFilter = this.form.value;
-    let genresToFilterNumber: number[] = [];
-    if (genresToFilter.checkArray) {
-      genresToFilterNumber = genresToFilter.checkArray.map(Number);
-      this.filterTvShow = this.filterTvShow.filter((tvshow: TvShow) =>
-        genresToFilterNumber.every((genreId: number) =>
-          tvshow.genre_ids.includes(genreId)
-        )
-      );
-
-      console.log('genresIds', genresToFilterNumber);
-      console.log('filter movies', this.filterTvShow);
-    }
-    this.cdr.detectChanges();
+  filter(filterData: filterInterface) {
+    this.genresToFilter = filterData.genres;
+    this.rating = filterData.rating;
+    this.TvShowService.getFilteredTV(this.genresToFilter,1,this.rating)
+      .pipe(take(1))
+      .subscribe((data: tvShowDataInterface) => {
+        this.filterTvShow = data.results;
+      });
   }
-  resetFilter() {
+
+  resetFilter(event: any) {
     this.filterTvShow = [];
-    this.form.reset();
   }
 }

@@ -1,3 +1,4 @@
+import { ContentComponent } from './core/shared/content/content.component';
 import { TvShowComponent } from './tv-show/tv-show.component';
 import { ActorsComponent } from './actors/actors.component';
 
@@ -21,11 +22,15 @@ const appRoutes: Routes = [
   },
   {
     path: 'movies', component:MoviesComponent,
+
   },
   {
     path:'actors', component: ActorsComponent,
   },
- 
+  
+  {
+    path: 'cont', component: ContentComponent
+  },
 
   {
     path: '**',

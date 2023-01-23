@@ -14,7 +14,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { ActorsComponent } from './actors/actors.component';
 import { MovieCardComponent } from './movies/cards/card-component';
 import { TvShowComponent } from './tv-show/tv-show.component';
-import {ButtonModule} from 'primeng/button';
+
 import { SharedModule } from './core/shared/shared.module';
 
 @NgModule({
@@ -38,7 +38,6 @@ import { SharedModule } from './core/shared/shared.module';
     AppRoutingModule,
     VirtualScrollerModule,
     ReactiveFormsModule,
-    ButtonModule,
     SharedModule
   ],
   bootstrap: [AppComponent],

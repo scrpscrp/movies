@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { tvShowDataInterface } from '../Interface/tvShow-data.interface';
+import { DataInterface } from '../Interface/data.Interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,10 @@ export class TvShowService {
 
   getGenres():Observable<any>{
     return this.http.get(`${this.urlGenres}${this.APIkey}&language=en-US`);
+  }
+  getFilteredTV(genres: string, pageCount?: number, rating?: string): Observable<tvShowDataInterface> {
+    return this.http.get<tvShowDataInterface>(`
+    https://api.themoviedb.org/3/discover/tv?${this.APIkey}&with_genres=${genres}&vote_average.gte=${rating}&page=${pageCount}`);
   }
   // getTvShowAiringToday(): Observable<tvShowDataInterface> {
   //   return this.http.get<tvShowDataInterface>(

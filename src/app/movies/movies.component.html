@@ -4,17 +4,19 @@
       <h2>{{ title }}</h2>
     </div>
     <div class="filter">
-      <app-filter (filterDataEvent)="filter($event)"
-      (resetFilterEvent)="resetFilter($event)"
-      [genresToFilter]="genresToFilter">
-    </app-filter>
-      
+      <app-filter
+        (filterDataEvent)="filter($event)"
+        (resetFilterEvent)="resetFilter($event)"
+        [genresToFilter]="genresToFilter"
+      >
+      </app-filter>
     </div>
   </div>
   <div class="cards-container">
     <ng-container *ngIf="!filterMovies.length; else filteredMoviesExist">
       <div *ngFor="let movie of movies">
         <app-cards
+          [cardId]="movie.id"
           [title]="movie.title"
           [date]="movie.release_date"
           [poster_path]="movie.poster_path"
@@ -35,7 +37,6 @@
       </div>
     </ng-template>
 
-    <!-- <button (click)="loadMore()">Load more</button> -->
     <p-button (click)="loadMore()" label="LOAD MORE"></p-button>
   </div>
 </div>

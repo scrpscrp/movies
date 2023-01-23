@@ -14,6 +14,7 @@ export class MovieCardComponent implements OnInit {
   @Input() date: string='';
   @Input() poster_path: string='';
   @Input() vote_average!: number;
+  @Input() cardId: number = null;
 
   
 

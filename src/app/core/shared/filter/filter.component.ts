@@ -1,45 +1,60 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { filterInterface } from 'src/app/Interface/filter.interface';
 import { formsInterface } from 'src/app/Interface/form.interface';
 import { Movie } from 'src/app/Interface/movie.interface';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-
-  @Output() filterDataEvent = new EventEmitter<string>();
+  @Output() filterDataEvent = new EventEmitter<filterInterface>();
   @Output() resetFilterEvent = new EventEmitter();
+
   
+
   form: FormGroup;
-  @Input() genresToFilter: string = "";
+  @Input() genresToFilter: string = '';
+  rating = '';
 
-
-
-  constructor(
-    private fb: FormBuilder
-  ) {
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       checkArray: this.fb.array([], [Validators.required]),
     });
-   }
-
-  ngOnInit(): void {
   }
+
+  ngOnInit(): void {}
 
   filter() {
     let genresToFilter = this.form.value;
     if (genresToFilter.checkArray) {
-      this.genresToFilter = genresToFilter.checkArray.toString();
-      this.filterDataEvent.emit(this.genresToFilter);
+      const filterValue: filterInterface = {
+        rating: this.rating,
+        genres: genresToFilter.checkArray.toString(),
+      };
+
+      this.filterDataEvent.emit(filterValue);
     }
   }
+
   resetFilter() {
     this.form.reset();
     this.resetFilterEvent.emit();
   }
+  
+
+  submitForm() {
+    this.filter();
+  }
+  
 
   Data: formsInterface[] = [
     // { name:''}
@@ -98,8 +113,4 @@ export class FilterComponent implements OnInit {
       });
     }
   }
-  submitForm() {
-    this.filter();
-  }
-
 }

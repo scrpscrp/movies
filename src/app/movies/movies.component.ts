@@ -1,12 +1,12 @@
 import { MoviesService } from './../services/movies.service';
 import { DataInterface } from '../Interface/data.Interface';
-import { TvShowService } from '../services/tv-show.service';
+
 import { Movie } from './../Interface/movie.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { formsInterface } from '../Interface/form.interface';
 import { take, tap } from 'rxjs';
-
+import { filterInterface } from '../Interface/filter.interface';
 
 @Component({
   selector: 'app-movies',
@@ -16,17 +16,16 @@ import { take, tap } from 'rxjs';
 export class MoviesComponent implements OnInit {
   movies: Movie[] = [];
   filterMovies: Movie[] = [];
-  genresToFilter: string = "";
+  genresToFilter: string = '';
   params: string = '';
   title: string = '';
   pageCount: number = 1;
+  rating: string = '';
 
   constructor(
     private movieService: MoviesService,
-    private route: ActivatedRoute,
-  ) {
-
-  }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.checkCurrentRoute();
@@ -70,35 +69,34 @@ export class MoviesComponent implements OnInit {
   loadMore() {
     this.pageCount++;
     if (this.filterMovies.length) {
-      this.movieService.getFilteredMovies(this.genresToFilter, this.pageCount).pipe(
-        take(1)
-      ).subscribe((data:DataInterface) => {
-        this.filterMovies.push(...data.results);
-      })
+      this.movieService
+        .getFilteredMovies(this.genresToFilter, this.pageCount)
+        .pipe(take(1))
+        .subscribe((data: DataInterface) => {
+          this.filterMovies.push(...data.results);
+        });
     } else {
       this.movieService
-        .getMovies(this.params, this.pageCount).pipe(
-          take(1)
-        )
+        .getMovies(this.params, this.pageCount)
+        .pipe(take(1))
         .subscribe((data: DataInterface) => {
           this.movies.push(...data.results);
         });
     }
   }
 
-  filter(genresToFilter: string) {
-    this.genresToFilter = genresToFilter;
-    this.movieService.getFilteredMovies(genresToFilter).pipe(
-      take(1)
-    ).subscribe((movieData: DataInterface) => {
-      this.filterMovies = movieData.results
-    })
-
+  filter(filterValue: filterInterface) {
+    this.genresToFilter = filterValue.genres;
+    this.rating = filterValue.rating;
+    this.movieService
+      .getFilteredMovies(this.genresToFilter, 1, this.rating)
+      .pipe(take(1))
+      .subscribe((movieData: DataInterface) => {
+        this.filterMovies = movieData.results;
+      });
   }
 
   resetFilter(event: any) {
     this.filterMovies = [];
   }
-
-
 }
