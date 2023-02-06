@@ -3,7 +3,11 @@
   </app-modal-trailer>
   <div class="cont">
     <div class="posterCard">
+      <ng-container *ngFor="details.poster_path; else noImg"></ng-container>
       <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ details.poster_path " (click)="showModal()" />
+      <ng-template #noImg>
+        <img class="posterImg" src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
+      </ng-template>
       <div class="cardDescription">
         <div class="title-text">
           <h1>{{details.title}}</h1>
@@ -32,8 +36,14 @@
       <ng-template let-similarMovies pTemplate="item">
         <div class="movie-item">
           <div class="movie-item-content" (click)="navigateToMovieDetails(similarMovies.id)">
-            <div *ngIf="similarMovies.poster_path" class="mb-3">
-              <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarMovies.poster_path " />
+            <div class="mb-3">
+              <ng-container *ngIf="similarMovies.poster_path; else noImg">
+                <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarMovies.poster_path " />
+              </ng-container>
+              <ng-template #noImg>
+                <img class="movie-image"
+                  src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
+              </ng-template>
             </div>
             <div>
               <h5 class="movie-title">{{similarMovies.title}}</h5>
@@ -84,7 +94,13 @@
   </app-modal-trailer>
   <div class="cont">
     <div class="posterCard">
-      <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ tvDetails.poster_path " (click)="showModal()" />
+      <ng-container *ngIf="tvDetails.poster_path; else noImg">
+        <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ tvDetails.poster_path "
+          (click)="showModal()" />
+      </ng-container>
+      <ng-template #noImg>
+        <img class="movie-image" src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
+      </ng-template>
       <div class="cardDescription">
         <div class="title-text">
           <h1>{{tvDetails.name}}</h1>
@@ -111,8 +127,14 @@
     <ng-template let-similarTv pTemplate="item">
       <div class="movie-item">
         <div class="movie-item-content" (click)="navigateToTvDetails(similarTv.id)">
-          <div *ngIf="similarTv.poster_path" class="mb-3">
-            <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarTv.poster_path " />
+          <div class="mb-3">
+            <ng-container *ngIf="similarTv.poster_path; else noImg">
+              <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarTv.poster_path " />
+            </ng-container>
+            <ng-template #noImg>
+              <img class="movie-image"
+                src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
+            </ng-template>
           </div>
           <div>
             <h5 class="movie-title">{{similarTv.title}}</h5>
@@ -166,9 +188,15 @@
     <div>
       <div class="knownFor-wrapper small-cards-wrapper">
         <div class="knownForCards small-cards" *ngFor="let movie of actorsCast">
-          <div *ngIf="movie.poster_path" class="knownForPoster small-cards-poster">
-            <img class="knownForImg small-cards-img" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path "
-              (click)="navigateToMovieDetails(movie.id)" />
+          <div class="knownForPoster small-cards-poster">
+            <ng-container *ngIf="movie.poster_path; else noImage">
+              <img class="knownForImg small-cards-img" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path "
+                (click)="navigateToMovieDetails(movie.id)" />
+            </ng-container>
+            <ng-template #noImage>
+              <img class="knownForImg small-cards-img"
+                src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
+            </ng-template>
           </div>
           <div class="knownForDesciption small-cards-description">
             <h2>{{movie.title}}</h2>

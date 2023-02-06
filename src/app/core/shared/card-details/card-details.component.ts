@@ -3,14 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { movieDetailsinterface } from 'src/app/Interface/movieDetails.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from 'src/app/services/movies.service';
-import { formsInterface} from 'src/app/Interface/form.interface';
 import { TvDetailsInterface } from 'src/app/Interface/tvDetails.interface';
 import { TvShowService } from 'src/app/services/tv-show.service';
 import { actorsDetailsInterface } from 'src/app/Interface/actorsDetails.interface';
 import { ActorsService } from 'src/app/services/actors.service';
-import { actorsDataInterface } from 'src/app/Interface/actors-data.interface';
 import { actorsInterface } from 'src/app/Interface/actors.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Movie } from 'src/app/Interface/movie.interface';
 import { TvShow } from 'src/app/Interface/tvshow.interface';
 import { tvShowDataInterface } from 'src/app/Interface/tvShow-data.interface';
@@ -33,15 +30,12 @@ export class CardDetailsComponent implements OnInit {
 
   id: string ='';
 
-
   details: movieDetailsinterface ;
   image:string ='';
   tvDetails: TvDetailsInterface;
   actorsDetails: actorsDetailsInterface;
   knownFor: KnownForInterface [];
-  // actorsDetails$: BehaviorSubject<actorsDetailsInterface> = new BehaviorSubject<actorsDetailsInterface>(null);
   actorsInterface: actorsInterface [];
-  // generalActorInfo$:BehaviorSubject<actorsInterface> = new BehaviorSubject<actorsInterface>(null);
   actorsCast: actorsCast[] =[];
   similarMovies: Movie[] = [];
   similarTv: TvShow [] = [];
@@ -80,10 +74,6 @@ export class CardDetailsComponent implements OnInit {
     
   ngOnInit(): void {
     this.getDetails();
-    
-    // this.getTvDetails();
-    // this.getTimeFromMinutes(this.runtime);
-
   }
   showModal() {
     this.modal = true
@@ -98,7 +88,6 @@ export class CardDetailsComponent implements OnInit {
           this.image = 'https://image.tmdb.org/t/p/w500' + this.details.backdrop_path;
           this.moviesService.getSimilarMovies(this.id).pipe(take(1)).subscribe((similarMovies: DataInterface) => {
             this.similarMovies = similarMovies.results;
-
             this.moviesService.getCastMovie(this.id).pipe(take(1)).subscribe((castMovie: movieCredits)=> {
               this.movieCast = castMovie.cast;
               this.movieCrew = castMovie.crew;
@@ -128,7 +117,6 @@ export class CardDetailsComponent implements OnInit {
             this.actorsDetails = data;
             this.actorService.findDetails(this.id).pipe(take(1)).subscribe((data: actorsCredit)=> {
               this.actorsCast = data.cast;
-              console.log(this.actorsCast);
             })
           });
          }

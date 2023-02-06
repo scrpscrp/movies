@@ -62,7 +62,6 @@ checked : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   
 
   Data: formsInterface[] = [
-    // { name:''}
 
     { id: 28, name: 'Action' },
 

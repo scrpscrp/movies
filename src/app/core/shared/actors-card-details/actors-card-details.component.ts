@@ -8,13 +8,11 @@ import { actorsDetailsInterface } from 'src/app/Interface/actorsDetails.interfac
 })
 export class ActorsCardDetailsComponent implements OnInit {
 @Input() actorsDetails: actorsDetailsInterface = null;
+
   
-
-
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
 }

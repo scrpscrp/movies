@@ -11,16 +11,13 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
 import { CardDetailsComponent } from './core/shared/card-details/card-details.component';
-import { SliderComponent } from './core/shared/slider/slider.component';
+
 
 
 const appRoutes: Routes = [
   {
     path: '',
     component: HomeComponent,
-  },
-  {
-    path: 'mov', component: SliderComponent,
   },
   {
     path: 'mo', component: ActorsCardDetailsComponent,

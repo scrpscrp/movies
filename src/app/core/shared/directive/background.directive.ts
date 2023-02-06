@@ -28,8 +28,6 @@ export class BackgroundDirective {
         'backgroundSize',
         `cover`,
     );
-    
-  // );
     }
 
 

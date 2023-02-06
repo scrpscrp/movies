@@ -11,10 +11,8 @@ import { BackgroundDirective } from './directive/background.directive';
 import {RatingModule} from 'primeng/rating';
 import { MovieCardComponent } from 'src/app/movies/cards/card-component';
 import {KnobModule} from 'primeng/knob';
-import { ToggleDirective } from './directive/toggle.directive';
 import { MinutesPipe } from './pipes/minutes.pipe';
 import {CarouselModule} from 'primeng/carousel';
-import { SliderComponent } from './slider/slider.component';
 import { ModalTrailerComponent } from './modal-trailer/modal-trailer.component';
 import { SafeUrlPipe } from './pipes/safeUrl.pipe';
 import { ActorsCardDetailsComponent } from './actors-card-details/actors-card-details.component';
@@ -29,7 +27,7 @@ import {PaginatorModule} from 'primeng/paginator';
 
 
 @NgModule({
-  declarations: [FilterComponent, CardDetailsComponent, BackgroundDirective, MovieCardComponent, ToggleDirective,MinutesPipe, SliderComponent, ModalTrailerComponent, SafeUrlPipe, ActorsCardDetailsComponent,],
+  declarations: [FilterComponent, CardDetailsComponent, BackgroundDirective, MovieCardComponent,MinutesPipe, ModalTrailerComponent, SafeUrlPipe, ActorsCardDetailsComponent,],
   imports: [
     CommonModule,
     ReactiveFormsModule,

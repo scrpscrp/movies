@@ -24,7 +24,7 @@ export class ActorsComponent implements OnInit {
     this.actorService
       .getPopularActors()
       .pipe(take(1)).subscribe((data: actorsDataInterface) => (this.actors = data.results));
-
+  
   }
 
   loadMore() {
