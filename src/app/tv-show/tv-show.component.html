@@ -2,43 +2,39 @@
   <div>
     <h2>{{ title }}</h2>
     <div class="filter">
-      <app-filter
-        (filterDataEvent)="filter($event)"
-        (resetFilterEvent)="resetFilter($event)"
-        [genresToFilter]="genresToFilter"
-      ></app-filter>
+      <app-filter (filterDataEvent)="filter($event)" (resetFilterEvent)="resetFilter($event)"
+        [genresToFilter]="genresToFilter"></app-filter>
     </div>
   </div>
   <div class="content">
+    <div class="sort">
+      <div (click)="toggleSortMenu()"><p-button class="sort-text" label="sort by" icon="pi pi-chevron-right"
+          iconPos="right"></p-button>
+      </div>
+      <div class="sort-menu" *ngIf="isSortMenuOpened">
+        <p-button label="name" class="btn-sort-item" (click)="sortBy('title')" (click)="toggleSortMenu()"></p-button>
+        <p-button label="rating" class="btn-sort-item" (click)="sortBy('vote_avarage')"
+          (click)="toggleSortMenu()"></p-button>
+        <p-button label="year" class="btn-sort-item" (click)="sortBy('release_date')"
+          (click)="toggleSortMenu()"></p-button>
+      </div>
+    </div>
     <div class="cards-container">
       <ng-container *ngIf="!filterTvShow.length; else filteredTvShowExist">
-        <div *ngFor="let tv of tvShow">
-          <app-cards
-            [cardId]="tv.id"
-            [title]="tv.name"
-            [date]="tv.first_air_date || 'unknown'"
-            [poster_path]="tv.poster_path"
-            [vote_average]="tv.vote_average"
-          >
+        <div *ngFor="let tv of tvShow | orderBy: headerOrder">
+          <app-cards (click)="navigateToTvShowDetails(tv.id)" [title]="tv.name" [date]="tv.first_air_date || 'unknown'"
+            [poster_path]="tv.poster_path" [vote_average]="tv.vote_average">
           </app-cards>
         </div>
       </ng-container>
       <ng-template #filteredTvShowExist>
-        <div *ngFor="let tv of filterTvShow">
-          <app-cards
-            [title]="tv.name"
-            [date]="tv.first_air_date"
-            [poster_path]="tv.poster_path"
-            [vote_average]="tv.vote_average"
-          >
+        <div *ngFor="let tv of filterTvShow | orderBy: headerOrder">
+          <app-cards (click)="navigateToTvShowDetails(tv.id)" [title]="tv.name" [date]="tv.first_air_date"
+            [poster_path]="tv.poster_path" [vote_average]="tv.vote_average">
           </app-cards>
         </div>
       </ng-template>
+      <p-button styleClass="loadBtn" (click)="loadMore()" label="Load more"></p-button>
     </div>
-    <p-button
-      styleClass="loadBtn"
-      (click)="loadMore()"
-      label="Load more"
-    ></p-button>
   </div>
 </div>

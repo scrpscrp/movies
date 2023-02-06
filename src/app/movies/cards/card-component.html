@@ -1,5 +1,5 @@
 <div class="card" 
-[routerLink]="cardId.toString()">
+>
   <div class="card-poster">
   <img  [src]="'https://image.tmdb.org/t/p/w500' + poster_path" />
 </div>
@@ -7,7 +7,7 @@
     <h1>{{ title }}</h1>
   </div>
   <div class="card-description">
-    <p>{{date}}</p>
-    <p>{{vote_average}}</p>
+    <p-knob [(ngModel)]="vote_average" [textColor]="'white'" [size]="40" [readonly]="true" [min]="0" [max]="10"></p-knob>
+    <p class="date">{{date | date }}</p>
   </div>
 </div>

@@ -6,9 +6,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { filterInterface } from 'src/app/Interface/filter.interface';
 import { formsInterface } from 'src/app/Interface/form.interface';
 import { Movie } from 'src/app/Interface/movie.interface';
+import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-filter',
@@ -18,14 +20,16 @@ import { Movie } from 'src/app/Interface/movie.interface';
 export class FilterComponent implements OnInit {
   @Output() filterDataEvent = new EventEmitter<filterInterface>();
   @Output() resetFilterEvent = new EventEmitter();
+ 
+ren = this.element.nativeElement;
 
   
-
+checked : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   form: FormGroup;
   @Input() genresToFilter: string = '';
   rating = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public element: ElementRef, public render: Renderer2) {
     this.form = this.fb.group({
       checkArray: this.fb.array([], [Validators.required]),
     });
@@ -47,6 +51,7 @@ export class FilterComponent implements OnInit {
 
   resetFilter() {
     this.form.reset();
+    this.checked.next(false);
     this.resetFilterEvent.emit();
   }
   
@@ -113,4 +118,5 @@ export class FilterComponent implements OnInit {
       });
     }
   }
+
 }

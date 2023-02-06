@@ -1,7 +1,8 @@
-import { NumberValueAccessor } from '@angular/forms';
+
 
 export interface TvShow {
   first_air_date: string;
+  media_type: string;
   id: number;
   name: string;
   overview: string;

@@ -1,0 +1,13 @@
+<div class="tranding-wrapper">
+    <div class="rec">
+        <app-search-bar></app-search-bar>
+    </div>
+    <div class="movie-tranding">
+        <div class="movie-tranding-cards" *ngFor="let movie of trandings"
+            (click)="navigateToDetails(movie.media_type, movie.id)">
+            <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path " />
+            <h5>{{movie.title || movie.name}}<br>({{movie.first_air_date || movie.release_date | date:'yyyy'}})</h5>
+        </div>
+    </div>
+</div>
+<p-paginator [rows]="20" [totalRecords]="5000" (onPageChange)="paginate($event)"></p-paginator>

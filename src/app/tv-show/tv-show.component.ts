@@ -4,7 +4,7 @@ import { tvShowDataInterface } from '../Interface/tvShow-data.interface';
 import { Movie } from '../Interface/movie.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TvShowService } from '../services/tv-show.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs';
 import { formsInterface } from '../Interface/form.interface';
@@ -23,11 +23,15 @@ export class TvShowComponent implements OnInit {
   filterTvShow: TvShow[] = [];
   genresToFilter: string = '';
   rating: string = '';
+  headerOrder: string = '';
+
+  isSortMenuOpened: boolean = false;
   
 
   constructor(
     private TvShowService: TvShowService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +66,6 @@ export class TvShowComponent implements OnInit {
           .pipe(take(1))
           .subscribe((data: tvShowDataInterface) => {
             this.tvShow = data.results;
-            console.log(this.tvShow);
           });
       }
     });
@@ -85,11 +88,6 @@ export class TvShowComponent implements OnInit {
     }
   }
 
-  // filterGenres() {
-  //   this.filterTvShow = this.tvShow.filter((tvshow: TvShow) =>
-  //     tvshow.genre_ids.includes(35)
-  //   );
-  // }
   filter(filterData: filterInterface) {
     this.genresToFilter = filterData.genres;
     this.rating = filterData.rating;
@@ -103,4 +101,14 @@ export class TvShowComponent implements OnInit {
   resetFilter(event: any) {
     this.filterTvShow = [];
   }
+  navigateToTvShowDetails(tvShowId:number) {
+    this.router.navigate(['tv_show_details'], {queryParams: {tvShowDetails: tvShowId}});
+  }
+  sortBy(headerOrder: string) {
+    this.headerOrder = headerOrder
+      }
+      
+      toggleSortMenu() {
+    this.isSortMenuOpened = !this.isSortMenuOpened;
+      }
 }

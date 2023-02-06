@@ -1,24 +1,24 @@
 <div class="filter2">
-  <form  class="checkBox"  [formGroup]="form" novalidate>
-    <div *ngFor="let data of Data; let i = index">
-      <label>
-        <input
-          type="checkbox"
-          [value]="data.id"
-          (change)="onCheckboxChange($event)"
-        />
-        {{ data.name }}
-      </label>
+  <div class="cheWrap">
+
+    <form class="checkBox" [formGroup]="form" novalidate>
+      <div *ngFor="let data of Data; let i = index">
+        <label>
+          <input type="checkbox" [value]="data.id" [checked]="(checked | async)" (change)="onCheckboxChange($event)" />
+          {{ data.name }}
+        </label>
+      </div>
+    </form>
+    <div class="filters">
+      <div class="sliderRate">
+        <p-slider [(ngModel)]="rating" [min]="0" [max]="10" [step]="1"></p-slider>
+        <p>{{ rating }}</p>
+      </div>
+      <div class="filterBtn">
+        <p-button (click)="submitForm()" label="Submit"></p-button>
+        <p-button (click)="resetFilter()" label="Reset"></p-button>
+      </div>
     </div>
-  </form>
-  <div class="filters">
-  <div class="sliderRate">
-    <p-slider [(ngModel)]="rating" [min]="0" [max]="10" [step]="1"></p-slider>
-    <p>{{ rating }}</p>
   </div>
-  <div class="filterBtn">
-    <p-button (click)="submitForm()" label="Submit"></p-button>
-    <p-button (click)="resetFilter()"  label="Reset"></p-button>
-  </div>
-</div>
+
 </div>

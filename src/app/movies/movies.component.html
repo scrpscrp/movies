@@ -1,42 +1,46 @@
 <div class="wrapper">
+
   <div>
     <div>
       <h2>{{ title }}</h2>
     </div>
     <div class="filter">
-      <app-filter
-        (filterDataEvent)="filter($event)"
-        (resetFilterEvent)="resetFilter($event)"
-        [genresToFilter]="genresToFilter"
-      >
+      <app-filter (filterDataEvent)="filter($event)" (resetFilterEvent)="resetFilter($event)"
+        [genresToFilter]="genresToFilter">
       </app-filter>
     </div>
   </div>
-  <div class="cards-container">
-    <ng-container *ngIf="!filterMovies.length; else filteredMoviesExist">
-      <div *ngFor="let movie of movies">
-        <app-cards
-          [cardId]="movie.id"
-          [title]="movie.title"
-          [date]="movie.release_date"
-          [poster_path]="movie.poster_path"
-          [vote_average]="movie.vote_average"
-        >
-        </app-cards>
+  <div>
+    <div class="sort">
+      <div (click)="toggleSortMenu()"><p-button class="sort-text" label="sort by" icon="pi pi-chevron-right"
+          iconPos="right"></p-button>
       </div>
-    </ng-container>
-    <ng-template #filteredMoviesExist>
-      <div *ngFor="let movie of filterMovies">
-        <app-cards
-          [title]="movie.title"
-          [date]="movie.release_date"
-          [poster_path]="movie.poster_path"
-          [vote_average]="movie.vote_average"
-        >
-        </app-cards>
+      <div class="sort-menu" *ngIf="isSortMenuOpened">
+        <p-button label="name" class="btn-sort-item" (click)="sortBy('title')" (click)="toggleSortMenu()"></p-button>
+        <p-button label="rating" class="btn-sort-item" (click)="sortBy('vote_avarage')"
+          (click)="toggleSortMenu()"></p-button>
+        <p-button label="year" class="btn-sort-item" (click)="sortBy('release_date')"
+          (click)="toggleSortMenu()"></p-button>
       </div>
-    </ng-template>
+    </div>
+    <div class="cards-container">
+      <ng-container *ngIf="!filterMovies.length; else filteredMoviesExist">
+        <div *ngFor="let movie of movies | orderBy: headerOrder">
+          <app-cards (click)="navigateToMovieDetails(movie.id)" [title]="movie.title" [date]="movie.release_date"
+            [poster_path]="movie.poster_path" [vote_average]="movie.vote_average">
+          </app-cards>
+        </div>
+      </ng-container>
+      <ng-template #filteredMoviesExist>
+        <div *ngFor="let movie of filterMovies | orderBy: headerOrder">
+          <app-cards (click)="navigateToMovieDetails(movie.id)" [title]="movie.title" [date]="movie.release_date"
+            [poster_path]="movie.poster_path" [vote_average]="movie.vote_average">
+          </app-cards>
+        </div>
+      </ng-template>
 
-    <p-button (click)="loadMore()" label="LOAD MORE"></p-button>
+      <p-button (click)="loadMore()" label="LOAD MORE"></p-button>
+    </div>
   </div>
+
 </div>

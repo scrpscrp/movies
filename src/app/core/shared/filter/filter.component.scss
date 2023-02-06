@@ -1,5 +1,15 @@
 .sliderRate {
-    width:200px;
+    width: 200px;
     margin-top: 20px;
     height: 50px;
+}
+
+.hide {
+    display: none;
+}
+
+.filterBtn {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
 }

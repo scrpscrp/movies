@@ -1,0 +1,184 @@
+<div *ngIf="details" class="card-wrapper">
+  <app-modal-trailer *ngIf="modal" titel="Modal Window" (close)="modal = false" [trailerId]="id">
+  </app-modal-trailer>
+  <div class="cont">
+    <div class="posterCard">
+      <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ details.poster_path " (click)="showModal()" />
+      <div class="cardDescription">
+        <div class="title-text">
+          <h1>{{details.title}}</h1>
+          <h2>({{details.release_date | date:'yyyy'}})</h2>
+        </div>
+        <p-rating [ngModel]="details.vote_average" [readonly]="true" [stars]="10" [cancel]="false"></p-rating>
+        <p *ngIf="details.tagline" class="tagline">"{{details.tagline}}"</p>
+        <p><span class="realese-text">Release date: </span>{{details.release_date | date}}</p>
+        <p><span class="description-text">Duration: </span>{{details.runtime | MinutesPipe}}</p>
+        <div class="genres">
+          <p class="text-genre">Genre:</p>
+          <p *ngFor="let genre of details.genres">{{genre.name}}</p>
+        </div>
+        <p class="overview"><span class="description-text">Description: </span>{{details.overview}}</p>
+      </div>
+    </div>
+    <div class="bg" appBackground [imageUrl]="image">
+      <div class="cover">
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="similarMovies.length > 0">
+    <p-carousel [value]="similarMovies" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
+      [responsiveOptions]="responsiveOptions">
+      <ng-template let-similarMovies pTemplate="item">
+        <div class="movie-item">
+          <div class="movie-item-content" (click)="navigateToMovieDetails(similarMovies.id)">
+            <div *ngIf="similarMovies.poster_path" class="mb-3">
+              <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarMovies.poster_path " />
+            </div>
+            <div>
+              <h5 class="movie-title">{{similarMovies.title}}</h5>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </ng-container>
+
+  <div class="movie-credits">
+    <div class="small-cards-wrapper movie-cast">
+      <div class="small-cards" *ngFor="let actors of movieCast">
+        <div class="small-cards-poster" (click)="navigateActorId(actors.id)">
+          <ng-container *ngIf="actors.profile_path; else noImage">
+            <img class="small-cards-img " [src]=" 'https://image.tmdb.org/t/p/w500'+ actors.profile_path " />
+          </ng-container>
+          <ng-template #noImage>
+            <img class="small-cards-img"
+              src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
+          </ng-template>
+        </div>
+        <div class="small-cards-description">
+          <h2>{{actors.name}}</h2>
+          <p>{{actors.character}}</p>
+          <p>{{actors.known_for_department}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div div class="mall-cards-wrapper movie-crew">
+      <div class="small-cards" *ngFor="let crew of movieCrew">
+        <div class="small-cards-description">
+          <h2>{{crew.name}}</h2>
+          <p>{{crew.job}}</p>
+          <p>{{crew.known_for_department}}</p>
+          <p>{{crew.department}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div *ngIf="tvDetails" class="card-wrapper">
+  <app-modal-trailer *ngIf="modal" titel="Modal Window" (close)="modal = false" [trailerId]="id">
+  </app-modal-trailer>
+  <div class="cont">
+    <div class="posterCard">
+      <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ tvDetails.poster_path " (click)="showModal()" />
+      <div class="cardDescription">
+        <div class="title-text">
+          <h1>{{tvDetails.name}}</h1>
+          <h2>({{tvDetails.first_air_date| date:'yyyy'}})</h2>
+        </div>
+        <p-rating [ngModel]="tvDetails.vote_average" [readonly]="true" [stars]="10" [cancel]="false"></p-rating>
+        <p *ngIf="tvDetails.tagline" class="tagline">"{{tvDetails.tagline}}"</p>
+        <p><span class="realese-text">Release date: </span>{{tvDetails.first_air_date | date}}</p>
+        <div class="genres">
+          <p class="text-genre">Genre:</p>
+          <p *ngFor="let genre of tvDetails.genres">{{genre.name}}</p>
+        </div>
+        <p class="overview"><span class="description-text">Description: </span>{{tvDetails.overview}}</p>
+      </div>
+    </div>
+    <div class="bg" appBackground [imageUrl]="image">
+      <div class="cover">
+      </div>
+    </div>
+  </div>
+
+  <p-carousel [value]="similarTv" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template let-similarTv pTemplate="item">
+      <div class="movie-item">
+        <div class="movie-item-content" (click)="navigateToTvDetails(similarTv.id)">
+          <div *ngIf="similarTv.poster_path" class="mb-3">
+            <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarTv.poster_path " />
+          </div>
+          <div>
+            <h5 class="movie-title">{{similarTv.title}}</h5>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+
+  <div class="movie-credits">
+    <div class="small-cards-wrapper movie-cast">
+      <div class="small-cards" *ngFor="let actors of movieCast">
+        <div class="small-cards-poster">
+          <ng-container *ngIf="actors.profile_path; else noImage">
+            <img class="small-cards-img " [src]=" 'https://image.tmdb.org/t/p/w500'+ actors.profile_path "
+              (click)="navigateActorId(actors.id)" />
+          </ng-container>
+          <ng-template #noImage>
+            <img class="small-cards-img"
+              src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
+          </ng-template>
+        </div>
+        <div class="small-cards-description">
+          <h2>{{actors.name}}</h2>
+          <p>{{actors.character}}</p>
+          <p>{{actors.known_for_department}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="small-cards-wrapper movie-crew">
+      <div class="small-cards" *ngFor="let crew of movieCrew">
+        <div class="small-cards-description">
+          <h2>{{crew.name}}</h2>
+          <p>{{crew.job}}</p>
+          <p>{{crew.known_for_department}}</p>
+          <p>{{crew.department}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<ng-container *ngIf="actorsDetails">
+
+  <div class="card-wrapper">
+    <app-actors-card-details [actorsDetails]="actorsDetails"></app-actors-card-details>
+    <div>
+      <div class="knownFor-wrapper small-cards-wrapper">
+        <div class="knownForCards small-cards" *ngFor="let movie of actorsCast">
+          <div *ngIf="movie.poster_path" class="knownForPoster small-cards-poster">
+            <img class="knownForImg small-cards-img" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path "
+              (click)="navigateToMovieDetails(movie.id)" />
+          </div>
+          <div class="knownForDesciption small-cards-description">
+            <h2>{{movie.title}}</h2>
+            <p-rating [ngModel]="movie.vote_average" class="stars" [readonly]="true" [stars]="10"
+              [cancel]="false"></p-rating>
+            <p>{{movie.release_date| date}}</p>
+            <p>{{movie.overview}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

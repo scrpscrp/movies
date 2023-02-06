@@ -1,9 +1,11 @@
-import { contentBoardInterface } from 'src/app/Interface/contentBoard.interface';
+import { trailerDataInterface } from './../Interface/trailer.data.interface';
+import { movieDetailsinterface } from '../Interface/movieDetails.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DataInterface } from '../Interface/data.Interface';
+import { movieCredits } from '../Interface/movie.credits.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,12 @@ export class MoviesService {
       `${this.UrlMovie}${orderType}?${this.APIkey}&language=en-US&page=${pageCount}`
     );
   }
+  
+  getSimilarMovies(movieId: string): Observable<DataInterface> {
+    return this.http.get<DataInterface>(
+      `${this.UrlMovie}${movieId}/similar?${this.APIkey}&language=en-US&page`
+    );
+  }
 
   getGenre(): Observable<any> {
     return this.http.get(
@@ -32,7 +40,14 @@ export class MoviesService {
     (`https://api.themoviedb.org/3/discover/movie?${this.APIkey}&with_genres=${genres}&vote_average.gte=${rating}&page=${pageCount}`);
   }
   
-  getMovieDetails():Observable<contentBoardInterface>{
-    return this.http.get<contentBoardInterface>(`https://api.themoviedb.org/3/movie/130392?${this.APIkey}`)
+  getMovieDetails(movieId: string):Observable<movieDetailsinterface>{
+    return this.http.get<movieDetailsinterface>(`https://api.themoviedb.org/3/movie/${movieId}?${this.APIkey}`)
   }
+  getCastMovie(movieId:string): Observable<movieCredits> {
+    return this.http.get<movieCredits>(`${this.UrlMovie}${movieId}/credits?${this.APIkey}`);
+  }
+  getMovieTrailer(trailerId:string ): Observable<trailerDataInterface>{
+    return this.http.get<trailerDataInterface>(`${this.UrlMovie}${trailerId}/videos?${this.APIkey}`)
+  }
+  
 }

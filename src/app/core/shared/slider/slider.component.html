@@ -1,0 +1,33 @@
+<ng-container *ngIf="similarMovies"></ng-container>
+<p-carousel [value]="similarMovies || similarTv" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000"
+    [circular]="true" [responsiveOptions]="responsiveOptions">
+    <ng-template let-similarMovies pTemplate="item">
+        <div class="movie-item">
+            <div class="movie-item-content" (click)="navigateToMovieDetails(similarMovies.id)">
+                <div class="mb-3">
+                    <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ (similarMovies.poster_path) " />
+                </div>
+                <div>
+                    <h5 class="movie-title">{{similarMovies.title}}</h5>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<ng-container *ngIf="similarTv"></ng-container>
+<p-carousel [value]="similarTv" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template let-similarTv pTemplate="item">
+        <div class="movie-item">
+            <div class="movie-item-content" (click)="navigateToTvDetails(similarTv.id)">
+                <div class="mb-3">
+                    <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ (similarTv.poster_path) " />
+                </div>
+                <div>
+                    <h5 class="movie-title">{{similarTv.title}}</h5>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>

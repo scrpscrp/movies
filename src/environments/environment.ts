@@ -8,7 +8,8 @@ export const environment = {
   UrlMovie: 'https://api.themoviedb.org/3/movie/',
   UrlTvShow: 'https://api.themoviedb.org/3/tv/',
   UrlActors: 'https://api.themoviedb.org/3/person/',
-  urlGenres: 'https://api.themoviedb.org/3/genre/movie/list?'
+  urlGenres: 'https://api.themoviedb.org/3/genre/movie/list?',
+  url: 'https://api.themoviedb.org/3/'
 };
 
 /*

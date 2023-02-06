@@ -3,16 +3,19 @@ import { DataInterface } from '../Interface/data.Interface';
 
 import { Movie } from './../Interface/movie.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { formsInterface } from '../Interface/form.interface';
 import { take, tap } from 'rxjs';
 import { filterInterface } from '../Interface/filter.interface';
+
+
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
 })
+
 export class MoviesComponent implements OnInit {
   movies: Movie[] = [];
   filterMovies: Movie[] = [];
@@ -21,16 +24,28 @@ export class MoviesComponent implements OnInit {
   title: string = '';
   pageCount: number = 1;
   rating: string = '';
+  headerOrder: string = '';
+
+  isSortMenuOpened: boolean = false;
+
+  // sortBy:any = [
+  //   { name: 'Name'},
+  //   { name: 'Popularity'},
+  //   { name: 'Year'},
+  // ];
+  // selectedValue: string = '';
+
+
 
   constructor(
     private movieService: MoviesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.checkCurrentRoute();
-    this.movieService.getGenre().subscribe((genres) => console.log(genres));
-    this.filterMovies = this.movies;
+   
   }
 
   checkCurrentRoute() {
@@ -70,10 +85,11 @@ export class MoviesComponent implements OnInit {
     this.pageCount++;
     if (this.filterMovies.length) {
       this.movieService
-        .getFilteredMovies(this.genresToFilter, this.pageCount)
+        .getFilteredMovies(this.genresToFilter, this.pageCount, '0')
         .pipe(take(1))
         .subscribe((data: DataInterface) => {
           this.filterMovies.push(...data.results);
+          console.log(data.results);
         });
     } else {
       this.movieService
@@ -98,5 +114,17 @@ export class MoviesComponent implements OnInit {
 
   resetFilter(event: any) {
     this.filterMovies = [];
+  }
+
+  navigateToMovieDetails(movieId: number) {
+    this.router.navigate(['/movie_details'], {queryParams: {movieDetails: movieId}});
+  }
+
+  sortBy(headerOrder: string) {
+this.headerOrder = headerOrder
+  }
+  
+  toggleSortMenu() {
+this.isSortMenuOpened = !this.isSortMenuOpened;
   }
 }

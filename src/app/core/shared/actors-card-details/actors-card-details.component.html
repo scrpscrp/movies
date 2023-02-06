@@ -1,0 +1,23 @@
+<div class="card-wrapper">
+    <div class="cont">
+        <div class="posterCard">
+            <div>
+                <ng-container *ngIf="actorsDetails.profile_path; else noImage">
+                    <img class="posterImg" [src]="'https://image.tmdb.org/t/p/w500'+ actorsDetails.profile_path" />
+                </ng-container>
+            </div>
+            <ng-template #noImage>
+                <img class="small-cards-img"
+                    src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
+            </ng-template>
+            <div class="cardDescription">
+                <div class="title-text">
+                    <h1>{{actorsDetails.name}}</h1>
+                </div>
+                <p><span class="realese-text">Birthday: </span>{{actorsDetails.birthday| date}}</p>
+                <p><span class="realese-text">Place of birth: </span>{{actorsDetails.place_of_birth}}</p>
+                <p class="overview"><span class="description-text">Biography: </span>{{actorsDetails.biography}}</p>
+            </div>
+        </div>
+    </div>
+</div>

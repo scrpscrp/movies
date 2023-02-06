@@ -1,4 +1,5 @@
-import { ContentComponent } from './core/shared/content/content.component';
+import { ActorsCardDetailsComponent } from './core/shared/actors-card-details/actors-card-details.component';
+
 import { TvShowComponent } from './tv-show/tv-show.component';
 import { ActorsComponent } from './actors/actors.component';
 
@@ -9,7 +10,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
-
+import { CardDetailsComponent } from './core/shared/card-details/card-details.component';
+import { SliderComponent } from './core/shared/slider/slider.component';
 
 
 const appRoutes: Routes = [
@@ -18,20 +20,29 @@ const appRoutes: Routes = [
     component: HomeComponent,
   },
   {
+    path: 'mov', component: SliderComponent,
+  },
+  {
+    path: 'mo', component: ActorsCardDetailsComponent,
+  },
+  {
     path: 'tv-show', component:TvShowComponent,
   },
   {
+    path: 'tv_show_details', component: CardDetailsComponent,
+  },
+  {
     path: 'movies', component:MoviesComponent,
-
   },
   {
     path:'actors', component: ActorsComponent,
   },
-  
   {
-    path: 'cont', component: ContentComponent
+    path: 'actors_details', component: CardDetailsComponent,
   },
-
+  {
+    path:'movie_details', component: CardDetailsComponent, 
+  },
   {
     path: '**',
     component: NotFoundComponent,

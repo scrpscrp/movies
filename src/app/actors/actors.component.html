@@ -1,12 +1,22 @@
 <div class="wrapper">
   <div class="cards-container">
     <div *ngFor="let actor of actors">
-      <app-cards
+      <div class="card" 
+      (click)="navigateActorId(actor.id)"
+>
+  <div class="card-poster">
+  <img  [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path" />
+</div>
+  <div class="card-title">
+    <h1>{{ actor.name }}</h1>
+  </div>
+</div>
+      <!-- <app-cards
         [title]="actor.name"
         [date]="actor.known_for_department"
         [poster_path]="actor.profile_path"
-      ></app-cards>
+      ></app-cards> -->
     </div>
-    <button (click)="loadMore()">Load more</button>
+    <p-button (click)="loadMore()" label="LOAD MORE"></p-button>
   </div>
 </div>

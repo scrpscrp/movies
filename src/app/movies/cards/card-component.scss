@@ -1,0 +1,28 @@
+::ng-deep svg {
+    width: 30px;
+    height: 30px;
+}
+
+.card-description {
+    padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.p-knob-text {
+    color: rgb(0, 136, 255);
+}
+
+.date {
+    padding-right: 15px;
+}
+
+.card {
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}

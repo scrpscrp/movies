@@ -1,0 +1,18 @@
+<ng-container *ngIf="(trailerKey$ | async ) as trailerKey">
+
+    <div class="modal-wrapper">
+        <div class="modal">
+            <div class="video-container">
+                <iframe class="video" [src]="('https://www.youtube.com/embed/' + trailerKey) | safeUrl"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+        <!-- <div class="close-modal">
+          <p-button class="btn" lable="Close" (click)="close.emit()"></p-button>
+        </div> -->
+
+        <div class="backdrop" (click)="close.emit()"></div>
+    </div>
+</ng-container>

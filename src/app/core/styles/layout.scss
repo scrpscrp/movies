@@ -1,55 +1,96 @@
-
 .cards-container {
-    display:grid;
+    display: grid;
     grid-template-columns: 200px 200px 200px 200px;
     grid-gap: 20px;
 
 }
+
 .wrapper {
     margin-top: 20px;
-    display:flex;
+    display: flex;
     justify-content: space-around;
+    min-height: 100%;
 }
+
 .filter {
-    width:5%;
+    width: 5%;
 }
 
 .card {
-    border:3px inset;
+    border: 3px inset;
     border-color: #c298d8;
-    box-shadow: 1px 2px 5px #c298d8 ;
+    box-shadow: 1px 2px 5px #c298d8;
     text-shadow: 2px 5px 10px #6d1f96;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
 }
+
 .card-poster {
 
-    height:280px;
+    height: 280px;
+
     img {
         width: 100%;
-        height:100%;
+        height: 100%;
     }
-    
+
 }
+
 .card-title {
-   height:70px;
-   padding:10px;
-   h1 {
-    font-size: 13px;
-   }
-   
+    height: 40px;
+    padding: 10px;
+
+    h1 {
+        font-size: 14px;
+    }
+
 }
+
 .card-description {
-    padding-left:10px;
-    border-top: 5px solid #3b3c3d;;
+    padding-left: 10px;
+    border-top: 5px solid #3b3c3d;
+    ;
 }
+
 .checkBox {
-    width : 300px;
-    height:200px;
+    width: 300px;
+    height: 200px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+
 .loadBtn {
-    width:100%;
+    width: 100%;
 }
 
+.main-wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    height: 100%;
+}
+
+.sort {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 3%;
+    padding: 10px;
+}
+
+.sort-menu {
+    padding-left: 10px;
+}
+
+.btn-sort-item {
+    padding: 3px;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.19);
+}
+
+.sort-text {
+    background: transparent
+}

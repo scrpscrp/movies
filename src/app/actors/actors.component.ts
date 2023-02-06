@@ -1,8 +1,8 @@
 import { ActorsService } from './../services/actors.service';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { subscribeOn } from 'rxjs';
 import { actorsDataInterface } from '../Interface/actors-data.interface';
 import { actorsInterface } from '../Interface/actors.interface';
 
@@ -15,7 +15,7 @@ export class ActorsComponent implements OnInit {
   actors: actorsInterface[] = [];
   pageCount: number = 1;
 
-  constructor(private http: HttpClient, private actorService: ActorsService) {}
+  constructor(private http: HttpClient, private actorService: ActorsService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.getActors();
@@ -23,14 +23,10 @@ export class ActorsComponent implements OnInit {
   getActors() {
     this.actorService
       .getPopularActors()
-      .subscribe((data: actorsDataInterface) => (this.actors = data.results));
-    console.log(this.actors);
+      .pipe(take(1)).subscribe((data: actorsDataInterface) => (this.actors = data.results));
+
   }
-  // getID() {
-  //   return this.http.get('https://api.themoviedb.org/3/person/popular?api_key=7765016c9cbefc9b6bf6151ff273f4a3&language=en-US').subscribe((res)=>{
-  //     console.log(res);
-  //   });
-  // }
+
   loadMore() {
     this.pageCount++;
     this.actorService
@@ -38,5 +34,10 @@ export class ActorsComponent implements OnInit {
       .subscribe((data: actorsDataInterface) => {
         this.actors.push(...data.results);
       });
+  }
+ 
+  navigateActorId(actorsId: number) {
+this.router.navigate(['/actors_details'], {queryParams: {actorsDetails: actorsId}});
+
   }
 }
