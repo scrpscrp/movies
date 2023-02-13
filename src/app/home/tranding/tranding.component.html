@@ -6,7 +6,8 @@
         <div class="movie-tranding-cards" *ngFor="let movie of trandings"
             (click)="navigateToDetails(movie.media_type, movie.id)">
             <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path " />
-            <h5>{{movie.title || movie.name}}<br>({{movie.first_air_date || movie.release_date | date:'yyyy'}})</h5>
+            <h5>{{movie.title || movie.name | slice:0:22}}<br>({{movie.first_air_date || movie.release_date |
+                date:'yyyy'}})</h5>
         </div>
     </div>
 </div>

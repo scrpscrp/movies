@@ -1,12 +1,11 @@
 import { MoviesService } from './../services/movies.service';
 import { DataInterface } from '../Interface/data.Interface';
-
 import { Movie } from './../Interface/movie.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { formsInterface } from '../Interface/form.interface';
 import { take, tap } from 'rxjs';
 import { filterInterface } from '../Interface/filter.interface';
+import { NavigateService } from '../services/navigate.service';
 
 
 
@@ -25,27 +24,16 @@ export class MoviesComponent implements OnInit {
   pageCount: number = 1;
   rating: string = '';
   headerOrder: string = '';
-
   isSortMenuOpened: boolean = false;
-
-  // sortBy:any = [
-  //   { name: 'Name'},
-  //   { name: 'Popularity'},
-  //   { name: 'Year'},
-  // ];
-  // selectedValue: string = '';
-
-
 
   constructor(
     private movieService: MoviesService,
     private route: ActivatedRoute,
-    private router: Router
+    private navigate: NavigateService
   ) {}
 
   ngOnInit(): void {
     this.checkCurrentRoute();
-   
   }
 
   checkCurrentRoute() {
@@ -117,7 +105,7 @@ export class MoviesComponent implements OnInit {
   }
 
   navigateToMovieDetails(movieId: number) {
-    this.router.navigate(['/movie_details'], {queryParams: {movieDetails: movieId}});
+    this.navigate.navigateToMovieDetails(movieId);
   }
 
   sortBy(headerOrder: string) {

@@ -8,6 +8,7 @@ import { trailerInterface } from 'src/app/Interface/trailer.interface';
 import { BehaviorSubject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-modal-trailer',
@@ -24,7 +25,6 @@ export class ModalTrailerComponent implements OnInit {
 
   constructor(
     private movieService: MoviesService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private tvShowService: TvShowService
   ) {}
@@ -42,6 +42,9 @@ export class ModalTrailerComponent implements OnInit {
   }
   getTvTrailer() {
     this.tvShowService.getTvTrailer(this.trailerId).pipe(take(1)).subscribe((data: tvTrailerData) => {
+      if (!data.results) {
+
+      }
       this.tvTrailer = data.results;
       const officialTrailer = this.tvTrailer.find(item => item.official || item.type === 'Trailer')
       this.trailerKey$.next(officialTrailer.key);

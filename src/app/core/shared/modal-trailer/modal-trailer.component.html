@@ -1,6 +1,6 @@
-<ng-container *ngIf="(trailerKey$ | async ) as trailerKey">
+<ng-container>
 
-    <div class="modal-wrapper">
+    <div class="modal-wrapper" *ngIf="(trailerKey$ | async ) as trailerKey; else noTrailer">
         <div class="modal">
             <div class="video-container">
                 <iframe class="video" [src]="('https://www.youtube.com/embed/' + trailerKey) | safeUrl"
@@ -11,4 +11,15 @@
         </div>
         <div class="backdrop" (click)="close.emit()"></div>
     </div>
+    <ng-template class="modal-wrapper" #noTrailer>
+        <div class="modal-wrapper">
+            <div class="modal" (click)="close.emit()">
+                <div class="video-container">
+                    <h1 class="error">SORRY NO VIDEO</h1>
+                    <i class="pi pi-times"></i>
+                </div>
+            </div>
+            <div class="backdrop" (click)="close.emit()"></div>
+        </div>
+    </ng-template>
 </ng-container>

@@ -24,7 +24,7 @@ export class MoviesService {
   
   getSimilarMovies(movieId: string): Observable<DataInterface> {
     return this.http.get<DataInterface>(
-      `${this.UrlMovie}${movieId}/similar?${this.APIkey}&language=en-US&page`
+      `${this.UrlMovie}${movieId}/similar?${this.APIkey}&language=en-US`
     );
   }
 

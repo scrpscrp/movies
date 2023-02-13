@@ -24,7 +24,7 @@ export class TvShowService {
 
   getSimilarTv(tvId: string): Observable<tvShowDataInterface> {
     return this.http.get<tvShowDataInterface>(
-      `${this.UrlTvShow}${tvId}/similar?${this.APIkey}&language=en-US&page`);
+      `${this.UrlTvShow}${tvId}/similar?${this.APIkey}&language=en-US&`);
   }
 
   getGenres():Observable<any>{

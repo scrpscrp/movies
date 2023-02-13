@@ -1,6 +1,6 @@
-<div class="search-bar">
+<form class="search-bar">
     <span class="p-input-icon-right">
-        <input type="text" pInputText placeholder="Search">
+        <input type="text" pInputText placeholder="Search" (keyup)="sendData($event)">
         <p-button>search</p-button>
     </span>
-</div>
+</form>

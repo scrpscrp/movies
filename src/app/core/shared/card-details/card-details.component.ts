@@ -18,6 +18,7 @@ import { KnownForInterface } from 'src/app/Interface/knownFor.interface';
 import { actorsCredit } from 'src/app/Interface/actors.credit.interface';
 import { actorsCast } from 'src/app/Interface/actors.cast.interface';
 import { take } from 'rxjs';
+import { NavigateService } from 'src/app/services/navigate.service';
 
 
 @Component({
@@ -42,6 +43,11 @@ export class CardDetailsComponent implements OnInit {
   movieCast: movieCast[] =[] ;
   movieCrew: movieCrew[] = [];
   actors: actorsInterface[] = [];
+  type = { 
+    movie : 'movie',
+    tvShow : 'tvShow',
+    actor: 'actor'
+  };
   responsiveOptions;
 
   constructor(
@@ -49,8 +55,7 @@ export class CardDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private tvShowService: TvShowService,
     private actorService: ActorsService,
-    private router: Router,
-    
+    private navigate: NavigateService
   ) {
     this.responsiveOptions = [
       {
@@ -74,71 +79,62 @@ export class CardDetailsComponent implements OnInit {
     
   ngOnInit(): void {
     this.getDetails();
+    this.details;
   }
   showModal() {
     this.modal = true
   }
 
+
   getDetails() {
-    this.activatedRoute.queryParams.subscribe((params)=>{
-      if (params['movieDetails']) {
-        this.id = params['movieDetails']
-        this.moviesService.getMovieDetails(this.id).pipe(take(1)).subscribe((movieDetails: movieDetailsinterface)=> {
-          this.details = movieDetails
-          this.image = 'https://image.tmdb.org/t/p/w500' + this.details.backdrop_path;
-          this.moviesService.getSimilarMovies(this.id).pipe(take(1)).subscribe((similarMovies: DataInterface) => {
-            this.similarMovies = similarMovies.results;
-            this.moviesService.getCastMovie(this.id).pipe(take(1)).subscribe((castMovie: movieCredits)=> {
-              this.movieCast = castMovie.cast;
-              this.movieCrew = castMovie.crew;
+      this.activatedRoute.queryParams.subscribe((params)=>{
+        this.render(params);
+        })
+      }
 
-            });
-          })
-          console.log( this.id);
-        });
-      }  else if (params['tvShowDetails']) {
-        this.id = params['tvShowDetails']
-        this.tvShowService.getTvShowDetails(this.id).pipe(take(1)).subscribe((tvData: TvDetailsInterface)=> {
-          this.tvDetails = tvData
-          this.image = 'https://image.tmdb.org/t/p/w500' + this.tvDetails.backdrop_path
-          this.tvShowService.getSimilarTv(this.id).pipe(take(1)).subscribe((similarTv: tvShowDataInterface)=> {
-            this.similarTv = similarTv.results;
-            this.tvShowService.getCastTv(this.id).pipe(take(1)).subscribe((castMovie: movieCredits)=> {
-              this.movieCast = castMovie.cast;
-              this.movieCrew = castMovie.crew;
-
-            });
-          })
-        });}  
-        else if (params['actorsDetails']) {
-          this.id = params['actorsDetails']
-          console.log( this.id)     
-          this.actorService.getActorsDetails(this.id).pipe(take(1)).subscribe((data: actorsDetailsInterface)=> {
-            this.actorsDetails = data;
-            this.actorService.findDetails(this.id).pipe(take(1)).subscribe((data: actorsCredit)=> {
-              this.actorsCast = data.cast;
-            })
+  render(params) {
+    if (params.movieDetails) {
+      this.id = params.movieDetails
+      this.moviesService.getMovieDetails(this.id).pipe(take(1)).subscribe((movieDetails: movieDetailsinterface)=> {
+        this.details = movieDetails
+        this.image = 'https://image.tmdb.org/t/p/w500' + this.details.backdrop_path;
+        this.moviesService.getSimilarMovies(this.id).pipe(take(1)).subscribe((similarMovies: DataInterface) => {
+          this.similarMovies = similarMovies.results;
+          this.moviesService.getCastMovie(this.id).pipe(take(1)).subscribe((castMovie: movieCredits)=> {
+            this.movieCast = castMovie.cast;
+            this.movieCrew = castMovie.crew;
           });
-         }
+        })
+      });
+  } else if (params.tvShowDetails) {
+    this.id = params.tvShowDetails
+    this.tvShowService.getTvShowDetails(this.id).pipe(take(1)).subscribe((tvData: TvDetailsInterface)=> {
+      this.tvDetails = tvData
+      this.image = 'https://image.tmdb.org/t/p/w500' + this.tvDetails.backdrop_path
+      this.tvShowService.getSimilarTv(this.id).pipe(take(1)).subscribe((similarTv: tvShowDataInterface)=> {
+        this.similarTv = similarTv.results;
+        this.tvShowService.getCastTv(this.id).pipe(take(1)).subscribe((castMovie: movieCredits)=> {
+          this.movieCast = castMovie.cast;
+          this.movieCrew = castMovie.crew;  
+        });
       })
-    }
-
-  navigateToDetails(type: string, contentId: number) {
-if (type === 'tv') {
-  this.router.navigate(['tv_show_details'], {queryParams: {tvShowDetails: contentId}});
-} else if ( type === 'movie') {
-  this.router.navigate(['/movie_details'], {queryParams: {movieDetails: contentId}});
-}
+    });} else if (params['actorsDetails']) {
+      this.id = params['actorsDetails'] 
+      this.actorService.getActorsDetails(this.id).pipe(take(1)).subscribe((data: actorsDetailsInterface)=> {
+        this.actorsDetails = data;
+        this.actorService.findDetails(this.id).pipe(take(1)).subscribe((data: actorsCredit)=> {
+          this.actorsCast = data.cast;
+        })
+      });
+     }
+}  
+  goToDetails(id:number, type:string) {
+    if (type === 'movie') {
+      this.navigate.navigateToMovieDetails(id);
+    } else if (type === 'tvShow'){
+      this.navigate.navigateToTvShowDetails(id);
+    } else if (type === 'actor'){
+      this.navigate.navigateActorDetails(id);
+    } 
   }
-
-  navigateToMovieDetails(movieId: number) {
-    this.router.navigate(['/movie_details'], {queryParams: {movieDetails: movieId}});
-  }
-  navigateToTvDetails(tvShowId:number) {
-    this.router.navigate(['tv_show_details'], {queryParams: {tvShowDetails: tvShowId}});
-  }
-  navigateActorId(actorsId: number) {
-this.router.navigate(['/actors_details'], {queryParams: {actorsDetails: actorsId}});
-  }
-
 }

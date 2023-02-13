@@ -1,10 +1,10 @@
 import { ActorsService } from './../services/actors.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { actorsDataInterface } from '../Interface/actors-data.interface';
 import { actorsInterface } from '../Interface/actors.interface';
+import { NavigateService } from '../services/navigate.service';
 
 @Component({
   selector: 'app-actors',
@@ -15,7 +15,7 @@ export class ActorsComponent implements OnInit {
   actors: actorsInterface[] = [];
   pageCount: number = 1;
 
-  constructor(private http: HttpClient, private actorService: ActorsService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private http: HttpClient, private actorService: ActorsService, private navigate: NavigateService) {}
 
   ngOnInit(): void {
     this.getActors();
@@ -37,7 +37,6 @@ export class ActorsComponent implements OnInit {
   }
  
   navigateActorId(actorsId: number) {
-this.router.navigate(['/actors_details'], {queryParams: {actorsDetails: actorsId}});
-
+    this.navigate.navigateActorDetails(actorsId);
   }
 }

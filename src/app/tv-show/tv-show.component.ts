@@ -1,14 +1,11 @@
 import { TvShow } from './../Interface/tvshow.interface';
 import { tvShowDataInterface } from '../Interface/tvShow-data.interface';
-
-import { Movie } from '../Interface/movie.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TvShowService } from '../services/tv-show.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs';
-import { formsInterface } from '../Interface/form.interface';
 import { filterInterface } from '../Interface/filter.interface';
+import { NavigateService } from '../services/navigate.service';
 
 @Component({
   selector: 'app-tv-show',
@@ -31,7 +28,7 @@ export class TvShowComponent implements OnInit {
   constructor(
     private TvShowService: TvShowService,
     private route: ActivatedRoute,
-    private router: Router
+    private navigate: NavigateService
   ) {}
 
   ngOnInit(): void {
@@ -102,7 +99,7 @@ export class TvShowComponent implements OnInit {
     this.filterTvShow = [];
   }
   navigateToTvShowDetails(tvShowId:number) {
-    this.router.navigate(['tv_show_details'], {queryParams: {tvShowDetails: tvShowId}});
+    this.navigate.navigateToTvShowDetails(tvShowId);
   }
   sortBy(headerOrder: string) {
     this.headerOrder = headerOrder

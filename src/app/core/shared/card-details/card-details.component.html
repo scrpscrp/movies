@@ -3,7 +3,7 @@
   </app-modal-trailer>
   <div class="cont">
     <div class="posterCard">
-      <ng-container *ngFor="details.poster_path; else noImg"></ng-container>
+      <ng-container *ngIf="details.poster_path; else noImg"></ng-container>
       <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ details.poster_path " (click)="showModal()" />
       <ng-template #noImg>
         <img class="posterImg" src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
@@ -35,7 +35,7 @@
       [responsiveOptions]="responsiveOptions">
       <ng-template let-similarMovies pTemplate="item">
         <div class="movie-item">
-          <div class="movie-item-content" (click)="navigateToMovieDetails(similarMovies.id)">
+          <div class="movie-item-content" (click)="goToDetails(similarMovies.id,type.movie)">
             <div class="mb-3">
               <ng-container *ngIf="similarMovies.poster_path; else noImg">
                 <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarMovies.poster_path " />
@@ -56,8 +56,9 @@
 
   <div class="movie-credits">
     <div class="small-cards-wrapper movie-cast">
+
       <div class="small-cards" *ngFor="let actors of movieCast">
-        <div class="small-cards-poster" (click)="navigateActorId(actors.id)">
+        <div class="small-cards-poster" (click)="goToDetails(actors.id,type.actor)">
           <ng-container *ngIf="actors.profile_path; else noImage">
             <img class="small-cards-img " [src]=" 'https://image.tmdb.org/t/p/w500'+ actors.profile_path " />
           </ng-container>
@@ -126,7 +127,7 @@
     [responsiveOptions]="responsiveOptions">
     <ng-template let-similarTv pTemplate="item">
       <div class="movie-item">
-        <div class="movie-item-content" (click)="navigateToTvDetails(similarTv.id)">
+        <div class="movie-item-content" (click)="goToDetails(similarTv.id,type.tvShow)">
           <div class="mb-3">
             <ng-container *ngIf="similarTv.poster_path; else noImg">
               <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarTv.poster_path " />
@@ -150,7 +151,7 @@
         <div class="small-cards-poster">
           <ng-container *ngIf="actors.profile_path; else noImage">
             <img class="small-cards-img " [src]=" 'https://image.tmdb.org/t/p/w500'+ actors.profile_path "
-              (click)="navigateActorId(actors.id)" />
+              (click)="goToDetails(actors.id,type.actor)" />
           </ng-container>
           <ng-template #noImage>
             <img class="small-cards-img"
@@ -191,7 +192,7 @@
           <div class="knownForPoster small-cards-poster">
             <ng-container *ngIf="movie.poster_path; else noImage">
               <img class="knownForImg small-cards-img" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path "
-                (click)="navigateToMovieDetails(movie.id)" />
+                (click)="goToDetails(movie.id,type.movie)" />
             </ng-container>
             <ng-template #noImage>
               <img class="knownForImg small-cards-img"

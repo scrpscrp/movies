@@ -6,6 +6,7 @@ import { TvShow } from './../../Interface/tvshow.interface';
 import { Component, OnInit } from '@angular/core';
 import { trandingService } from 'src/app/services/tranding.service';
 import { Router } from '@angular/router';
+import { NavigateService } from 'src/app/services/navigate.service';
 
 
 
@@ -23,8 +24,7 @@ export class TrandingComponent implements OnInit {
 
   constructor(
     private trandingservice: trandingService,
-    private router: Router,
-    
+    private navigate: NavigateService
   ) { }
 
   ngOnInit(): void {
@@ -47,9 +47,9 @@ export class TrandingComponent implements OnInit {
   
   navigateToDetails(type: string, contentId: number) {
     if (type === 'tv') {
-      this.router.navigate(['tv_show_details'], {queryParams: {tvShowDetails: contentId}});
+    this.navigate.navigateToTvShowDetails(contentId);
     } else if ( type === 'movie') {
-      this.router.navigate(['/movie_details'], {queryParams: {movieDetails: contentId}});
+    this.navigate.navigateToMovieDetails(contentId);
     }
   }
 
