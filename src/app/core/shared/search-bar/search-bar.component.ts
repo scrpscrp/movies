@@ -1,49 +1,59 @@
+import { trandingInterface } from './../../../Interface/tranding.interface';
+import { BehaviorSubject, debounceTime, concatMap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { DataInterface } from 'src/app/Interface/data.Interface';
-import { Movie } from 'src/app/Interface/movie.interface';
-import { MoviesService } from 'src/app/services/movies.service';
+import { Router } from '@angular/router';
+import { SearchService } from 'src/app/services/search.service';
 
-interface singleMoive{
-  title: string;
-  id: number;
-}
+
+
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
 
-
-
 export class SearchBarComponent implements OnInit {
-  page:number = 0;
-  movieArr:Movie[] = [];
-  movieId: any = [];
-  movieTitle: any = [];
-  
-  constructor(
-    private getMovie: MoviesService,
 
-  ) { }
+  keyValue$: BehaviorSubject<string> = new BehaviorSubject<string>(null)
+
+  constructor( private router: Router, private searchService: SearchService) { }
+
+  selected: string;
+
+  searched: trandingInterface[] = [];
+
+    searching(event) {
+      const value = event.query;
+      this.keyValue$.next(value);
+    }
+
 
   ngOnInit(): void {
-    this.findMovie();
-    console.log(this.movieId);
-    console.log(this.movieTitle);
-  }
-  
-  findMovie() {
-    for ( let i = 1; i < 10; i++) {
-      this.page = i;
-      this.getMovie.getMovies('popular',this.page).subscribe((data: DataInterface )=> {
-      data.results.forEach(item => this.movieId.push(item.id));
-      data.results.forEach(item => this.movieTitle.push(item.title));
-      }) 
+    this.keyValue$.pipe(
+      debounceTime(1000),
+    ).subscribe(val => {
+    if (this.keyValue$.value === null) {
+      return;
+    } else {
+      this.getResults(val);
     }
+      });
   }
 
-  sendData(event:any) {
-    console.log(event.target.value);
+  findMovie(value:string) {
+    if (!value) {
+      return ;
+    }
+    this.router.navigate(['/search-results'], { queryParams: { value: value}});
+    console.log(value);
+  }
+
+
+  getResults(value:string) {
+    this.searchService.search(value).subscribe( data => {
+      const filterResults = data.results.filter(item => item.title);
+      this.searched = filterResults;
+    } );
   }
 }
 

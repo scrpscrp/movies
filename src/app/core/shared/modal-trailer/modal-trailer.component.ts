@@ -22,6 +22,7 @@ export class ModalTrailerComponent implements OnInit {
   trailer: trailerInterface[] = [];
   tvTrailer: tvTrailerInterface[] = [];
   trailerKey$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  noVideo$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private movieService: MoviesService,
@@ -38,16 +39,18 @@ export class ModalTrailerComponent implements OnInit {
       this.trailer = data.results;
       const officialTrailer = this.trailer.find(item => item.official || item.type === 'Trailer')
       this.trailerKey$.next(officialTrailer.key);
+      if (!officialTrailer){
+        this.noVideo$.next(true);
+      }
     });
   }
   getTvTrailer() {
     this.tvShowService.getTvTrailer(this.trailerId).pipe(take(1)).subscribe((data: tvTrailerData) => {
-      if (!data.results) {
-
-      }
       this.tvTrailer = data.results;
-      const officialTrailer = this.tvTrailer.find(item => item.official || item.type === 'Trailer')
-      this.trailerKey$.next(officialTrailer.key);
+      if (this.tvTrailer.length > 0) {
+        const officialTrailer = this.tvTrailer.find(item => item.official || item.type === 'Trailer')
+        this.trailerKey$.next(officialTrailer.key);
+    } else this.noVideo$.next(true);
     });
   }
   

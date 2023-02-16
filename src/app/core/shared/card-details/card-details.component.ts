@@ -84,8 +84,6 @@ export class CardDetailsComponent implements OnInit {
   showModal() {
     this.modal = true
   }
-
-
   getDetails() {
       this.activatedRoute.queryParams.subscribe((params)=>{
         this.render(params);

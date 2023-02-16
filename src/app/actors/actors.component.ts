@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { actorsDataInterface } from '../Interface/actors-data.interface';
 import { actorsInterface } from '../Interface/actors.interface';
 import { NavigateService } from '../services/navigate.service';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-actors',
@@ -15,16 +16,16 @@ export class ActorsComponent implements OnInit {
   actors: actorsInterface[] = [];
   pageCount: number = 1;
 
-  constructor(private http: HttpClient, private actorService: ActorsService, private navigate: NavigateService) {}
+  constructor(private http: HttpClient, private actorService: ActorsService, private navigate: NavigateService, private search:SearchService) {}
 
   ngOnInit(): void {
     this.getActors();
+    this.search.search('avatar').subscribe((data) => console.log(data));
   }
   getActors() {
     this.actorService
       .getPopularActors()
       .pipe(take(1)).subscribe((data: actorsDataInterface) => (this.actors = data.results));
-  
   }
 
   loadMore() {

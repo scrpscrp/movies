@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MoviesComponent } from './movies/movies.component';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { ActorsComponent } from './actors/actors.component';
@@ -22,6 +22,9 @@ import { SearchBarComponent } from './core/shared/search-bar/search-bar.componen
 import {OrderModule} from 'ngx-order-pipe';
 import {DropdownModule} from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { SearcResultComponent } from './searc-result/searc-result.component';
+import { RatingModule } from 'primeng/rating';
 
 
 
@@ -36,7 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TvShowComponent,
       FooterComponent,
       HeaderComponent,
-      TrandingComponent
+      TrandingComponent,
+      SearcResultComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PaginatorModule,
     OrderModule,
     DropdownModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RatingModule,
+    AutoCompleteModule,
+    FormsModule 
   ],
   bootstrap: [AppComponent],
 })

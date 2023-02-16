@@ -16,7 +16,6 @@ import {CarouselModule} from 'primeng/carousel';
 import { ModalTrailerComponent } from './modal-trailer/modal-trailer.component';
 import { SafeUrlPipe } from './pipes/safeUrl.pipe';
 import { ActorsCardDetailsComponent } from './actors-card-details/actors-card-details.component';
-
 import {PaginatorModule} from 'primeng/paginator';
 
 

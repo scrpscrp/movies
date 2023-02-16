@@ -1,6 +1,8 @@
-<form class="search-bar">
+<div class="search-bar">
+    <p-autoComplete [(ngModel)]="selected" [suggestions]="searched" (completeMethod)="searching($event)" #search
+        field="title" [minLength]="1" (keydown.enter)="findMovie(keyValue$.value)" [showTransitionOptions]="'500ms'"
+        [hideTransitionOptions]="'500ms'"></p-autoComplete>
     <span class="p-input-icon-right">
-        <input type="text" pInputText placeholder="Search" (keyup)="sendData($event)">
-        <p-button>search</p-button>
+        <p-button (click)="findMovie(keyValue$.value)">search</p-button>
     </span>
-</form>
+</div>

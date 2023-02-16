@@ -11,10 +11,10 @@
     width: 100%;
 }
 
-input {
-    width: 100%;
-}
-
 .search-btn {
     border: none;
+}
+
+::ng-deep .p-autocomplete-input {
+    width: 600px;
 }

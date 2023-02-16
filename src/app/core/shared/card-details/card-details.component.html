@@ -6,7 +6,7 @@
       <ng-container *ngIf="details.poster_path; else noImg"></ng-container>
       <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ details.poster_path " (click)="showModal()" />
       <ng-template #noImg>
-        <img class="posterImg" src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd" />
+        <img class="posterImg" src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
       </ng-template>
       <div class="cardDescription">
         <div class="title-text">

@@ -45,12 +45,14 @@ export class TrandingComponent implements OnInit {
     this.getTranding();
   }
   
+  // navigateToDetails(type: string, contentId: number) {
+  //   if (type === 'tv') {
+  //   this.navigate.navigateToTvShowDetails(contentId);
+  //   } else if ( type === 'movie') {
+  //   this.navigate.navigateToMovieDetails(contentId);
+  //   }
+  // }
   navigateToDetails(type: string, contentId: number) {
-    if (type === 'tv') {
-    this.navigate.navigateToTvShowDetails(contentId);
-    } else if ( type === 'movie') {
-    this.navigate.navigateToMovieDetails(contentId);
-    }
-  }
-
+    type === 'tv' ? this.navigate.navigateToTvShowDetails(contentId):this.navigate.navigateToMovieDetails(contentId);
+   }
 }

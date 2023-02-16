@@ -1,0 +1,35 @@
+<div class="main-container">
+    <ng-container *ngFor="let movie of movieResults">
+        <div class="card-container">
+            <ng-container *ngIf="movie.poster_path; else noImg">
+                <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path"
+                    (click)="navigateToDetails(movie.media_type, movie.id)">
+            </ng-container>
+            <ng-template #noImg>
+                <img class="posterImg"
+                    src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
+            </ng-template>
+            <div class="info">
+                <div class="title">
+                    <h2 class="title-text">
+                        {{movie.title || movie.name}}
+                    </h2>
+                    <h2 class="title-text date">({{movie.release_date || movie.first_air_date | date:'yyyy'}})</h2>
+                </div>
+                <div class="description">
+                    <p-rating [ngModel]="movie.vote_average" [readonly]="true" [stars]="10" [cancel]="false"></p-rating>
+                    <p><span class="description-text">Release date: </span>{{movie.release_date || movie.first_air_date
+                        | date}}</p>
+                    <p class="description-info"><span class="description-text">Description: </span>{{movie.overview}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="(noResults$ | async)">
+        <div class="nothing-found">
+            <h1 class="error">Sorry nothing found by this name </h1>
+        </div>
+    </ng-container>
+</div>

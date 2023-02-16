@@ -1,0 +1,64 @@
+.main-container {
+    height: 100vh;
+}
+
+.posterImg {
+    width: 230px;
+    height: 350px;
+    transition-duration: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.03);
+    }
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 35px;
+
+    .info {
+        width: 75%;
+        padding-left: 20px;
+
+        .title {
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 25px;
+        }
+
+        .date {
+            color: #c298d8;
+        }
+
+        .description {
+            width: 55%;
+
+            .description-text {
+                color: #c298d8;
+            }
+        }
+    }
+
+    .title-text {
+        margin: 0;
+    }
+}
+
+.nothing-found {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-image: url('https://i.pinimg.com/736x/87/25/3b/87253b50b57e70f0aa3d242135b6f4f1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.6;
+
+    .error {
+        z-index: 100;
+    }
+
+}
