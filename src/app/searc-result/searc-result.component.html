@@ -1,5 +1,5 @@
 <div class="main-container">
-    <ng-container *ngFor="let movie of movieResults">
+    <ng-container *ngFor="let movie of Results">
         <div class="card-container">
             <ng-container *ngIf="movie.poster_path; else noImg">
                 <img class="posterImg" [src]=" 'https://image.tmdb.org/t/p/w500'+ movie.poster_path"

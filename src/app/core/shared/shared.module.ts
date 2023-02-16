@@ -6,27 +6,20 @@ import { FilterComponent } from './filter/filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
-import { CardDetailsComponent } from './card-details/card-details.component';
+import { CardDetailsComponent } from './components/card-details/card-details.component';
 import { BackgroundDirective } from './directive/background.directive';
 import {RatingModule} from 'primeng/rating';
-import { MovieCardComponent } from 'src/app/movies/cards/card-component';
+import { MovieCardComponent } from 'src/app/core/shared/cards/card-component';
 import {KnobModule} from 'primeng/knob';
 import { MinutesPipe } from './pipes/minutes.pipe';
 import {CarouselModule} from 'primeng/carousel';
-import { ModalTrailerComponent } from './modal-trailer/modal-trailer.component';
+import { ModalTrailerComponent } from './components/modal-trailer/modal-trailer.component';
 import { SafeUrlPipe } from './pipes/safeUrl.pipe';
-import { ActorsCardDetailsComponent } from './actors-card-details/actors-card-details.component';
+import { ActorsCardDetailsComponent } from './components/actors-card-details/actors-card-details.component';
 import {PaginatorModule} from 'primeng/paginator';
 
-
-
-
-
-
-
-
 @NgModule({
-  declarations: [FilterComponent, CardDetailsComponent, BackgroundDirective, MovieCardComponent,MinutesPipe, ModalTrailerComponent, SafeUrlPipe, ActorsCardDetailsComponent,],
+  declarations: [FilterComponent, CardDetailsComponent, BackgroundDirective, MovieCardComponent,MinutesPipe, ModalTrailerComponent, SafeUrlPipe, ActorsCardDetailsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -1,0 +1,26 @@
+<ng-container>
+    <div class="modal-wrapper" *ngIf="(trailerKey$ | async ) as trailerKey;">
+        <div class="modal">
+            <div class="video-container">
+                <iframe class="video" [src]="('https://www.youtube.com/embed/' + trailerKey) | safeUrl"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="backdrop" (click)="close.emit()"></div>
+    </div>
+
+    <ng-container *ngIf="(noVideo$ | async)" class="modal-wrapper modal-error">
+        <div class="modal-wrapper">
+            <div class="modal" (click)="close.emit()">
+                <div class="video-container error-container">
+                    <h1 class="error">SORRY NO VIDEO</h1>
+                    <i class="pi pi-times"></i>
+                </div>
+            </div>
+            <div class="backdrop" (click)="close.emit()"></div>
+        </div>
+    </ng-container>
+
+</ng-container>

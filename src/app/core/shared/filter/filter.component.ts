@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { filterInterface } from 'src/app/Interface/filter.interface';
-import { formsInterface } from 'src/app/Interface/form.interface';
-import { Movie } from 'src/app/Interface/movie.interface';
+import { FilterInterface } from 'src/app/core/shared/Interface/filter.interface';
+import { genresInterface } from 'src/app/core/shared/Interface/genres.interface';
+
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ import { Directive, ElementRef, Renderer2 } from '@angular/core';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  @Output() filterDataEvent = new EventEmitter<filterInterface>();
+  @Output() filterDataEvent = new EventEmitter<FilterInterface>();
   @Output() resetFilterEvent = new EventEmitter();
  
 ren = this.element.nativeElement;
@@ -40,7 +40,7 @@ checked : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   filter() {
     let genresToFilter = this.form.value;
     if (genresToFilter.checkArray) {
-      const filterValue: filterInterface = {
+      const filterValue: FilterInterface = {
         rating: this.rating,
         genres: genresToFilter.checkArray.toString(),
       };
@@ -61,7 +61,7 @@ checked : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   }
   
 
-  Data: formsInterface[] = [
+  Data: genresInterface[] = [
 
     { id: 28, name: 'Action' },
 

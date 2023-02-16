@@ -1,0 +1,26 @@
+.footer-wrap {
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+}
+
+.foot-container {
+    margin: auto auto;
+    text-align: center;
+    line-height: 2px;
+
+    .links {
+        display: flex;
+        justify-content: center;
+
+        a {
+            margin: 0 3px 0;
+            transition-duration: 0.3s;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+}

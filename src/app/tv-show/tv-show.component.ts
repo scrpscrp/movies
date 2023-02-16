@@ -1,12 +1,14 @@
-import { TvShow } from './../Interface/tvshow.interface';
-import { tvShowDataInterface } from '../Interface/tvShow-data.interface';
+import { TvShow } from '../core/shared/Interface/tvshow.interface';
+import { TvShowDataInterface } from '../core/shared/Interface/tvShow-data.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TvShowService } from '../services/tv-show.service';
+import { TvShowService } from './tv-show.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
-import { filterInterface } from '../Interface/filter.interface';
-import { NavigateService } from '../services/navigate.service';
+import { FilterInterface } from '../core/shared/Interface/filter.interface';
+import { NavigateService } from '../core/shared/services/navigate.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-tv-show',
   templateUrl: './tv-show.component.html',
@@ -21,10 +23,8 @@ export class TvShowComponent implements OnInit {
   genresToFilter: string = '';
   rating: string = '';
   headerOrder: string = '';
-
   isSortMenuOpened: boolean = false;
   
-
   constructor(
     private TvShowService: TvShowService,
     private route: ActivatedRoute,
@@ -44,24 +44,24 @@ export class TvShowComponent implements OnInit {
         switch (this.params) {
           case 'popular':
             this.title = 'Popular';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
           case 'airing_today':
             this.title = 'Airing today';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
           case 'on_the_air':
             this.title = 'On Tv';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
           case 'top_rated':
             this.title = 'Top Rated';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
         }
         this.TvShowService.getTvShow(this.params)
-          .pipe(take(1))
-          .subscribe((data: tvShowDataInterface) => {
+          .pipe(untilDestroyed(this))
+          .subscribe((data: TvShowDataInterface) => {
             this.tvShow = data.results;
           });
       }
@@ -72,30 +72,30 @@ export class TvShowComponent implements OnInit {
     this.pageCount++;
     if (this.filterTvShow.length) {
       this.TvShowService.getFilteredTV(this.genresToFilter, this.pageCount)
-        .pipe(take(1))
-        .subscribe((data: tvShowDataInterface) => {
+        .pipe(untilDestroyed(this))
+        .subscribe((data: TvShowDataInterface) => {
           this.filterTvShow.push(...data.results);
         });
     } else {
       this.TvShowService.getTvShow(this.params, this.pageCount)
-        .pipe(take(1))
-        .subscribe((data: tvShowDataInterface) => {
+        .pipe(untilDestroyed(this))
+        .subscribe((data: TvShowDataInterface) => {
           this.tvShow.push(...data.results);
         });
     }
   }
 
-  filter(filterData: filterInterface) {
+  filter(filterData: FilterInterface) {
     this.genresToFilter = filterData.genres;
     this.rating = filterData.rating;
     this.TvShowService.getFilteredTV(this.genresToFilter,1,this.rating)
-      .pipe(take(1))
-      .subscribe((data: tvShowDataInterface) => {
+      .pipe(untilDestroyed(this))
+      .subscribe((data: TvShowDataInterface) => {
         this.filterTvShow = data.results;
       });
   }
 
-  resetFilter(event: any) {
+  resetFilter() {
     this.filterTvShow = [];
   }
   navigateToTvShowDetails(tvShowId:number) {

@@ -1,5 +1,5 @@
 
-import { ActorsCardDetailsComponent } from './core/shared/actors-card-details/actors-card-details.component';
+import { ActorsCardDetailsComponent } from './core/shared/components/actors-card-details/actors-card-details.component';
 import { TvShowComponent } from './tv-show/tv-show.component';
 import { ActorsComponent } from './actors/actors.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -9,7 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
-import { CardDetailsComponent } from './core/shared/card-details/card-details.component';
+import { CardDetailsComponent } from './core/shared/components/card-details/card-details.component';
 import { SearcResultComponent } from './searc-result/searc-result.component';
 
 

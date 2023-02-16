@@ -2,7 +2,7 @@
   <div>
     <h2>{{ title }}</h2>
     <div class="filter">
-      <app-filter (filterDataEvent)="filter($event)" (resetFilterEvent)="resetFilter($event)"
+      <app-filter (filterDataEvent)="filter($event)" (resetFilterEvent)="resetFilter()"
         [genresToFilter]="genresToFilter"></app-filter>
     </div>
   </div>

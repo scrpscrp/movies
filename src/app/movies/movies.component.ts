@@ -1,13 +1,11 @@
-import { MoviesService } from './../services/movies.service';
-import { DataInterface } from '../Interface/data.Interface';
-import { Movie } from './../Interface/movie.interface';
+import { MoviesService } from './movies.service';
+import { DataInterface } from '../core/shared/Interface/data.Interface';
+import { Movie } from '../core/shared/Interface/movie.interface';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, tap } from 'rxjs';
-import { filterInterface } from '../Interface/filter.interface';
-import { NavigateService } from '../services/navigate.service';
-
-
+import { FilterInterface } from '../core/shared/Interface/filter.interface';
+import { NavigateService } from '../core/shared/services/navigate.service';
 
 @Component({
   selector: 'app-movies',
@@ -89,7 +87,7 @@ export class MoviesComponent implements OnInit {
     }
   }
 
-  filter(filterValue: filterInterface) {
+  filter(filterValue: FilterInterface) {
     this.genresToFilter = filterValue.genres;
     this.rating = filterValue.rating;
     this.movieService
