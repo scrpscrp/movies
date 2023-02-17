@@ -24,34 +24,36 @@
         <p class="overview"><span class="description-text">Description: </span>{{details.overview}}</p>
       </div>
     </div>
-    <div class="bg" appBackground [imageUrl]="image">
+    <div class="bg" appBackground [imageUrl$]="backgroundImage$.asObservable()">
       <div class="cover">
       </div>
     </div>
   </div>
 
   <ng-container *ngIf="similarMovies.length > 0">
-    <p-carousel [value]="similarMovies" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
-      [responsiveOptions]="responsiveOptions">
-      <ng-template let-similarMovies pTemplate="item">
-        <div class="movie-item">
-          <div class="movie-item-content" (click)="goToDetails(similarMovies.id,type.movie)">
-            <div class="mb-3">
-              <ng-container *ngIf="similarMovies.poster_path; else noImg">
-                <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarMovies.poster_path " />
-              </ng-container>
-              <ng-template #noImg>
-                <img class="movie-image"
-                  src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
-              </ng-template>
-            </div>
-            <div>
-              <h5 class="movie-title">{{similarMovies.title}}</h5>
+    <div class="carusel">
+      <p-carousel [value]="similarMovies" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
+        [responsiveOptions]="responsiveOptions">
+        <ng-template let-similarMovies pTemplate="item">
+          <div class="movie-item">
+            <div class="movie-item-content" (click)="goToDetails(similarMovies.id,type.movie)">
+              <div class="mb-3">
+                <ng-container *ngIf="similarMovies.poster_path; else noImg">
+                  <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarMovies.poster_path " />
+                </ng-container>
+                <ng-template #noImg>
+                  <img class="movie-image"
+                    src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
+                </ng-template>
+              </div>
+              <div>
+                <h5 class="movie-title">{{similarMovies.title}}</h5>
+              </div>
             </div>
           </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+        </ng-template>
+      </p-carousel>
+    </div>
   </ng-container>
 
   <div class="movie-credits">
@@ -117,33 +119,37 @@
         <p class="overview"><span class="description-text">Description: </span>{{tvDetails.overview}}</p>
       </div>
     </div>
-    <div class="bg" appBackground [imageUrl]="image">
+    <div class="bg" appBackground [imageUrl$]="backgroundImage$.asObservable()">
       <div class="cover">
       </div>
     </div>
   </div>
 
-  <p-carousel [value]="similarTv" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
-    [responsiveOptions]="responsiveOptions">
-    <ng-template let-similarTv pTemplate="item">
-      <div class="movie-item">
-        <div class="movie-item-content" (click)="goToDetails(similarTv.id,type.tvShow)">
-          <div class="mb-3">
-            <ng-container *ngIf="similarTv.poster_path; else noImg">
-              <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarTv.poster_path " />
-            </ng-container>
-            <ng-template #noImg>
-              <img class="movie-image"
-                src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
-            </ng-template>
+  <ng-container *ngIf="similarTv.length > 0">
+    <div class="carusel">
+      <p-carousel [value]="similarTv" [numVisible]="5" [numScroll]="3" [autoplayInterval]="7000" [circular]="true"
+        [responsiveOptions]="responsiveOptions">
+        <ng-template let-similarTv pTemplate="item">
+          <div class="movie-item">
+            <div class="movie-item-content" (click)="goToDetails(similarTv.id,type.tvShow)">
+              <div class="mb-3">
+                <ng-container *ngIf="similarTv.poster_path; else noImg">
+                  <img class="movie-image" [src]=" 'https://image.tmdb.org/t/p/w500'+ similarTv.poster_path " />
+                </ng-container>
+                <ng-template #noImg>
+                  <img class="movie-image"
+                    src="https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg" />
+                </ng-template>
+              </div>
+              <div>
+                <h5 class="movie-title">{{similarTv.title}}</h5>
+              </div>
+            </div>
           </div>
-          <div>
-            <h5 class="movie-title">{{similarTv.title}}</h5>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-carousel>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </ng-container>
 
   <div class="movie-credits">
     <div class="small-cards-wrapper movie-cast">
@@ -184,7 +190,7 @@
 
 <ng-container *ngIf="actorsDetails">
 
-  <div class="card-wrapper">
+  <div class="actors-wrapper">
     <app-actors-card-details [actorsDetails]="actorsDetails"></app-actors-card-details>
     <div>
       <div class="knownFor-wrapper small-cards-wrapper">

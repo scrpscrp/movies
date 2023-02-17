@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { SearcResultComponent } from './searc-result/searc-result.component';
 import { RatingModule } from 'primeng/rating';
-
+import {MenuItem} from 'primeng/api';
 
 
 @NgModule({

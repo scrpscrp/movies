@@ -1,11 +1,12 @@
 import { MoviesService } from './movies.service';
 import { DataInterface } from '../core/shared/Interface/data.Interface';
 import { Movie } from '../core/shared/Interface/movie.interface';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, tap } from 'rxjs';
 import { FilterInterface } from '../core/shared/Interface/filter.interface';
 import { NavigateService } from '../core/shared/services/navigate.service';
+
 
 @Component({
   selector: 'app-movies',
@@ -14,6 +15,7 @@ import { NavigateService } from '../core/shared/services/navigate.service';
 })
 
 export class MoviesComponent implements OnInit {
+
   movies: Movie[] = [];
   filterMovies: Movie[] = [];
   genresToFilter: string = '';
@@ -23,15 +25,19 @@ export class MoviesComponent implements OnInit {
   rating: string = '';
   headerOrder: string = '';
   isSortMenuOpened: boolean = false;
+  isFilterShowed: boolean = false;
+  filterBtnText: string = 'Show filter';
+  
 
   constructor(
     private movieService: MoviesService,
     private route: ActivatedRoute,
-    private navigate: NavigateService
+    private navigate: NavigateService,
   ) {}
 
   ngOnInit(): void {
     this.checkCurrentRoute();
+
   }
 
   checkCurrentRoute() {
@@ -42,19 +48,19 @@ export class MoviesComponent implements OnInit {
         switch (this.params) {
           case 'popular':
             this.title = 'Popular Movies';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
           case 'now_playing':
             this.title = 'Now Playing';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
           case 'upcoming':
             this.title = 'Upcoming';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
           case 'top_rated':
             this.title = 'Top Rated';
-            this.resetFilter(event);
+            this.resetFilter();
             break;
         }
         this.movieService
@@ -98,7 +104,12 @@ export class MoviesComponent implements OnInit {
       });
   }
 
-  resetFilter(event: any) {
+  showFilter() {
+    this.isFilterShowed = !this.isFilterShowed;
+    this.isFilterShowed ? this.filterBtnText = 'Hide filter' : this.filterBtnText = 'Show filter';
+    }
+
+  resetFilter() {
     this.filterMovies = [];
   }
 

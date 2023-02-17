@@ -24,6 +24,8 @@ export class TvShowComponent implements OnInit {
   rating: string = '';
   headerOrder: string = '';
   isSortMenuOpened: boolean = false;
+  isFilterShowed: boolean = false;
+  filterBtnText: string = 'Show filter';
   
   constructor(
     private TvShowService: TvShowService,
@@ -94,6 +96,11 @@ export class TvShowComponent implements OnInit {
         this.filterTvShow = data.results;
       });
   }
+
+  showFilter() {
+    this.isFilterShowed = !this.isFilterShowed;
+    this.isFilterShowed ? this.filterBtnText = 'Hide filter' : this.filterBtnText = 'Show filter';
+    }
 
   resetFilter() {
     this.filterTvShow = [];

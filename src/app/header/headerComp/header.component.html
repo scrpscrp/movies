@@ -1,9 +1,16 @@
 <div>
-  <p-menubar styleClass="flex" [model]="items">
+  <p-menubar [autoDisplay]="true" styleClass="flex" [model]="items">
     <ng-template pTemplate="start" class="logo">
       <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
       <div class="logo"><a class="link-text" routerLink=""> C I N E M A</a></div>
     </ng-template>
+    <!-- <ng-template pTemplate="end">
+      <p-autoComplete [(ngModel)]="selected" [style]="{
+        'width':'10%',
+        'margin':'0 auto'
+      }" [suggestions]="searched" (completeMethod)="searching($event)" #search field="title" [minLength]="1"
+        (keydown.enter)="findMovie(keyValue$.value)" [showTransitionOptions]="'500ms'"
+        [hideTransitionOptions]="'500ms'"></p-autoComplete>
+    </ng-template> -->
   </p-menubar>
 </div>
-<router-outlet></router-outlet>

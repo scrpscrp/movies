@@ -19,6 +19,7 @@ import { ActorsCredit } from 'src/app/core/shared/Interface/actors.credit.interf
 import { ActorsCast } from 'src/app/core/shared/Interface/actors.cast.interface';
 import { NavigateService } from 'src/app/core/shared/services/navigate.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BehaviorSubject } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -30,7 +31,8 @@ export class CardDetailsComponent implements OnInit {
   modal = false;
   id: string ='';
   details: MovieDetailsinterface ;
-  image:string ='';
+  backgroundImage$:BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
   tvDetails: TvDetailsInterface;
   actorsDetails: ActorsDetailsInterface;
   knownFor: KnownForInterface [];
@@ -89,7 +91,7 @@ export class CardDetailsComponent implements OnInit {
       this.id = params.movieDetails
       this.moviesService.getMovieDetails(this.id).pipe(untilDestroyed(this)).subscribe((movieDetails: MovieDetailsinterface)=> {
         this.details = movieDetails
-        this.image = 'https://image.tmdb.org/t/p/w500' + this.details.backdrop_path;
+        this.backgroundImage$.next('https://image.tmdb.org/t/p/w500' + this.details.backdrop_path);
         this.moviesService.getSimilarMovies(this.id).pipe(untilDestroyed(this)).subscribe((similarMovies: DataInterface) => {
           this.similarMovies = similarMovies.results;
           this.moviesService.getCastMovie(this.id).pipe(untilDestroyed(this)).subscribe((castMovie: MovieCredits)=> {
@@ -101,8 +103,8 @@ export class CardDetailsComponent implements OnInit {
   } else if (params.tvShowDetails) {
     this.id = params.tvShowDetails
     this.tvShowService.getTvShowDetails(this.id).pipe(untilDestroyed(this)).subscribe((tvData: TvDetailsInterface)=> {
-      this.tvDetails = tvData
-      this.image = 'https://image.tmdb.org/t/p/w500' + this.tvDetails.backdrop_path
+      this.tvDetails = tvData;
+      this.backgroundImage$.next('https://image.tmdb.org/t/p/w500' + this.tvDetails.backdrop_path);
       this.tvShowService.getSimilarTv(this.id).pipe(untilDestroyed(this)).subscribe((similarTv: TvShowDataInterface)=> {
         this.similarTv = similarTv.results;
         this.tvShowService.getCastTv(this.id).pipe(untilDestroyed(this)).subscribe((castMovie: MovieCredits)=> {

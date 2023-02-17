@@ -1,20 +1,22 @@
 <div class="wrapper">
-  <div class="cards-container">
-    <div *ngFor="let actor of actors">
-      <div class="card" (click)="navigateActorId(actor.id)">
-        <div class="card-poster">
-          <ng-container *ngIf="actor.profile_path; else noImg">
-            <img [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path" />
-          </ng-container>
-          <ng-template #noImg>
-            <img src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd">
-          </ng-template>
-        </div>
-        <div class="card-title">
-          <h1>{{ actor.name }}</h1>
+  <div class="container">
+    <div class="cards-container">
+      <div *ngFor="let actor of actors">
+        <div class="card" (click)="navigateActorId(actor.id)">
+          <div class="card-poster">
+            <ng-container *ngIf="actor.profile_path; else noImg">
+              <img [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path" />
+            </ng-container>
+            <ng-template #noImg>
+              <img src="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd">
+            </ng-template>
+          </div>
+          <div class="card-title">
+            <h1>{{ actor.name }}</h1>
+          </div>
         </div>
       </div>
+      <p-button (click)="loadMore()" label="LOAD MORE"></p-button>
     </div>
-    <p-button (click)="loadMore()" label="LOAD MORE"></p-button>
   </div>
 </div>
